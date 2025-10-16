@@ -1,0 +1,32 @@
+[
+  {
+    "model": "courses.lesson",
+    "pk": "24d2e1ff-f2ab-4e16-a929-b1d87e1f8a6c",
+    "fields": {
+      "course": "aa201b61-9f4b-4ff8-9b53-c98b18a2e2a2",
+      "title": "Introduction to Django",
+      "video_url": "https://example.com/videos/django-intro.mp4",
+      "lesson_content": "Overview of Django framework, installation, and setup."
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": "a81eab53-4c68-4bb2-b558-cb3e7c7531db",
+    "fields": {
+      "course": "f2c97cb1-ffb2-41ef-9de0-7ec8125b76e0",
+      "title": "Data Cleaning with Pandas",
+      "video_url": "https://example.com/videos/data-cleaning.mp4",
+      "lesson_content": "Learn how to preprocess and clean datasets using pandas."
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": "6f1c6d19-cb1e-48d0-a252-783154dc0d03",
+    "fields": {
+      "course": "cb2e184b-404f-44ff-b61c-6cc3f2a2ad4e",
+      "title": "Building Flutter UI",
+      "video_url": "https://example.com/videos/flutter-ui.mp4",
+      "lesson_content": "Design responsive mobile UIs using Flutter widgets."
+    }
+  }
+]

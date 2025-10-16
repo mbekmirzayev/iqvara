@@ -1,0 +1,29 @@
+[
+  {
+    "model": "blogs.comment",
+    "pk": "f5a2b2b6-9b40-4b09-a33c-7a41ec248173",
+    "fields": {
+      "user": "9d91e6c7-f22c-4c64-bc5d-7db8b60113cf",
+      "message": "Great explanation! Django seems easier than I thought.",
+      "blog": "21e7a9a3-9230-4d1f-b1c1-8c63e6a6d2c2"
+    }
+  },
+  {
+    "model": "blogs.comment",
+    "pk": "c1d4b61e-7cc3-45e0-b22a-2f8bb650c36a",
+    "fields": {
+      "user": "c23bf5a1-4a3f-4960-bb37-12e2e85a438f",
+      "message": "Loved the data science examples! Very practical.",
+      "blog": "c49bb7c4-089d-48f1-b1a5-2e7d7d3e5a0a"
+    }
+  },
+  {
+    "model": "blogs.comment",
+    "pk": "0a93d3e1-28fd-4b67-8e6b-12a9739aef55",
+    "fields": {
+      "user": "e9b4f91d-8f6c-4c2c-b83f-0ff15de4c4c0",
+      "message": "Excited to try Flutter after reading this!",
+      "blog": "9c62b1c3-4b27-40b2-9124-943ad3b7d35e"
+    }
+  }
+]

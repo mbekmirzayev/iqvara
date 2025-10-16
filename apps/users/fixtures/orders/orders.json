@@ -1,0 +1,32 @@
+[
+  {
+    "model": "orders.order",
+    "pk": "bb6b32d3-4e5e-4eab-a4f1-b0d85b5a80d7",
+    "fields": {
+      "amount": 1200000,
+      "user": "9d91e6c7-f22c-4c64-bc5d-7db8b60113cf",
+      "phone": "+998901234567",
+      "order_status": "done"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": "a59c8e12-8b3e-4b84-9a11-6509a6a1e8d3",
+    "fields": {
+      "amount": 890000,
+      "user": "c23bf5a1-4a3f-4960-bb37-12e2e85a438f",
+      "phone": "+998933456789",
+      "order_status": "pending"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": "d31a7b64-28d4-4de1-8473-11f37dc23a32",
+    "fields": {
+      "amount": 450000,
+      "user": "e9b4f91d-8f6c-4c2c-b83f-0ff15de4c4c0",
+      "phone": "+998907654321",
+      "order_status": "rejected"
+    }
+  }
+]

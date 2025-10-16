@@ -1,0 +1,26 @@
+[
+  {
+    "model": "tags.tag",
+    "pk": "e1c90d85-542a-43f1-85c4-c274b5b16a9d",
+    "fields": {
+      "title": "Django",
+      "slug": "django"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": "a3b6e9f5-c48a-4b84-a6a2-71f48b714bdf",
+    "fields": {
+      "title": "Python",
+      "slug": "python"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": "b7c4d9e2-57b8-4e32-b1a8-9d6c3cf10b2f",
+    "fields": {
+      "title": "Flutter",
+      "slug": "flutter"
+    }
+  }
+]

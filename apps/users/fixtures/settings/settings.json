@@ -1,0 +1,41 @@
+[
+  {
+    "model": "settings.settings",
+    "pk": 1,
+    "fields": {
+      "longitude": 69.2401,
+      "latitude": 41.2995,
+      "about_us": "<p>We are an online learning platform helping students reach their goals.</p>",
+      "phone": "+998901234567",
+      "contact_email": "info@eduhub.uz",
+      "support_email": "support@eduhub.uz",
+      "address": "Tashkent, Yunusobod district, Amir Temur street 45"
+    }
+  },
+  {
+    "model": "settings.settings",
+    "pk": 2,
+    "fields": {
+      "longitude": 69.2170,
+      "latitude": 41.3112,
+      "about_us": "<p>EduSpace provides professional IT courses with expert instructors.</p>",
+      "phone": "+998933456789",
+      "contact_email": "contact@eduspace.uz",
+      "support_email": "help@eduspace.uz",
+      "address": "Tashkent, Chilonzor district, Bunyodkor avenue 12"
+    }
+  },
+  {
+    "model": "settings.settings",
+    "pk": 3,
+    "fields": {
+      "longitude": 69.2754,
+      "latitude": 41.3408,
+      "about_us": "<p>CodeLab is dedicated to improving programming education in Uzbekistan.</p>",
+      "phone": "+998907654321",
+      "contact_email": "info@codelab.uz",
+      "support_email": "support@codelab.uz",
+      "address": "Tashkent, Mirzo Ulugbek district, Minor street 24"
+    }
+  }
+]

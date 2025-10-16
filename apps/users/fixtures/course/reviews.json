@@ -1,0 +1,32 @@
+[
+  {
+    "model": "courses.review",
+    "pk": "bf6a21a9-309c-48f2-a9e0-13b0aafdb3b7",
+    "fields": {
+      "student": "9d91e6c7-f22c-4c64-bc5d-7db8b60113cf",
+      "course": "aa201b61-9f4b-4ff8-9b53-c98b18a2e2a2",
+      "rating": 5,
+      "comment": "Excellent introduction to Django — clear explanations and practical projects."
+    }
+  },
+  {
+    "model": "courses.review",
+    "pk": "a29e9a0f-bbfa-4233-8a38-b8c68f5f3a74",
+    "fields": {
+      "student": "c23bf5a1-4a3f-4960-bb37-12e2e85a438f",
+      "course": "f2c97cb1-ffb2-41ef-9de0-7ec8125b76e0",
+      "rating": 4,
+      "comment": "Good overview of data science, but could include more deep learning examples."
+    }
+  },
+  {
+    "model": "courses.review",
+    "pk": "e3c2d018-2e7d-4f34-a1de-9b5619d3f5e7",
+    "fields": {
+      "student": "e9b4f91d-8f6c-4c2c-b83f-0ff15de4c4c0",
+      "course": "cb2e184b-404f-44ff-b61c-6cc3f2a2ad4e",
+      "rating": 5,
+      "comment": "Fantastic Flutter course! Loved the UI examples and animations."
+    }
+  }
+]
