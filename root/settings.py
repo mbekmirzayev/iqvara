@@ -1,19 +1,18 @@
 import os
+import sys
 from pathlib import Path
+
 from dotenv import load_dotenv
 
-# --- BASE DIR ---
 BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
-# --- .env ---
 load_dotenv(BASE_DIR / '.env')
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-# --- DEBUG & HOSTS ---
 DEBUG = True
 ALLOWED_HOSTS = ['*']
 
-# --- INSTALLED APPS ---
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,8 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # My apps
-    'apps.users',
-    'apps.shared',
+    'users',
+    'shared',
 
     # Third party
     'drf_spectacular',
@@ -35,7 +34,6 @@ INSTALLED_APPS = [
 if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
 
-# --- MIDDLEWARE ---
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,11 +48,9 @@ MIDDLEWARE = [
 if DEBUG:
     MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
-# --- ROOT URLS ---
 ROOT_URLCONF = 'root.urls'
 WSGI_APPLICATION = 'root.wsgi.application'
 
-# --- TEMPLATES ---
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -71,7 +67,6 @@ TEMPLATES = [
     },
 ]
 
-# --- DATABASE ---
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -83,21 +78,17 @@ DATABASES = {
     }
 }
 
-# --- AUTH USER MODEL ---
 AUTH_USER_MODEL = 'users.User'
 
-# --- PASSWORD VALIDATORS ---
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
 ]
 
-# --- INTERNAL IPs ---
 INTERNAL_IPS = ["127.0.0.1", "localhost"]
 
-# --- LANGUAGE & TIMEZONE ---
 LANGUAGE_CODE = 'en'
 LANGUAGES = [('en', 'English'), ('uz', 'Uzbek')]
 LOCALE_PATHS = [BASE_DIR / 'locale']
@@ -105,22 +96,14 @@ TIME_ZONE = 'Asia/Tashkent'
 USE_I18N = True
 USE_TZ = True
 
-# --- STATIC FILES ---
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',            # global static
-    BASE_DIR / 'apps' / 'static',   # apps ichidagi static
-]
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # collectstatic natijasi
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR / 'static')
 
-# --- MEDIA FILES ---
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# --- DEFAULT AUTO FIELD ---
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# --- REST FRAMEWORK ---
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
@@ -129,15 +112,36 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Your Project API',
     'DESCRIPTION': 'Your project description',
     'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': True,
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'displayOperationId': True,
+        'defaultModelsExpandDepth': -1,
+        'defaultModelExpandDepth': 3,
+    },
+
+    # 'SERVERS': [
+    #     {
+    #         'url': 'https://api.example.com/v1',
+    #         'description': 'Production server'
+    #     },
+    #     {
+    #         'url': 'http://localhost:8000/v1',
+    #         'description': 'Development server'
+    #     },
+    # ],
+
 }
 
-# --- CKEDITOR SETTINGS (soddalashtirilgan) ---
 CKEDITOR_5_CONFIGS = {
-    'default': {'toolbar': {'items': ['heading', '|', 'bold', 'italic', 'link','bulletedList','numberedList','blockQuote','imageUpload']}},
+    'default': {
+        'toolbar': {
+            'items': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote',
+                      'imageUpload']
+        }
+    }
 }
 
-# --- CACHE ---
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
@@ -145,11 +149,9 @@ CACHES = {
     }
 }
 
-# --- DEBUG TOOLBAR ---
 if DEBUG:
     INTERNAL_IPS += ['127.0.0.1']
 
-# --- JAZZMIN SETTINGS (optional) ---
 JAZZMIN_SETTINGS = {
     "site_title": "My Admin",
     "site_header": "My Admin Panel",

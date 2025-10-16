@@ -1,6 +1,6 @@
 from django.urls import path
 
-from apps.users.views import UserListView, CategoryListAPIView, CourseModelViewSet
+from users.views import UserListView, CategoryListAPIView, CourseModelViewSet
 
 urlpatterns = [
 

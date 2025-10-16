@@ -1,12 +1,12 @@
-from apps.shared.base import UUIDBaseModel, CreateBaseModel, SlugBaseModel
-from apps.users.models.blogs import Blog, Step, Comment
-from apps.users.models.courses import Category, Course, Lesson, Review
-from apps.users.models.orders import Order
-from apps.users.models.settings import Settings, FAQ
-from apps.users.models.tags import Tag
-from apps.users.models.users import User
+from shared.models import UUIDBaseModel, CreateBaseModel, SlugBaseModel
+from users.models.blogs import Blog, Step, Comment
+from users.models.courses import Category, Course, Lesson, Review, Enrollment
+from users.models.orders import Order
+from users.models.settings import Settings, FAQ
+from users.models.tags import Tag
+from users.models.users import User
 
 __all__ = [
-    'Course', 'Category', 'Settings', 'Blog', 'User', 'Order', 'Lesson' , 'Review', 'Step', 'Comment', 'FAQ'
-
+    'Course', 'Category', 'Settings', 'Blog', 'Enrollment', 'User', 'Order', 'Lesson', 'Review', 'Step', 'Comment',
+    'FAQ'
 ]

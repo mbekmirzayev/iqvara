@@ -10,7 +10,7 @@ class GenRandomUUID(Func):
 
 
 class UUIDBaseModel(Model):
-    id = UUIDField(primary_key=True, db_default=GenRandomUUID, editable=False)
+    id = UUIDField(primary_key=True, db_default=GenRandomUUID(), editable=False)
 
     class Meta:
         abstract = True

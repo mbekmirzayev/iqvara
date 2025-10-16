@@ -1,7 +1,7 @@
 from django.db.models import ImageField, ManyToManyField, CASCADE, ForeignKey , CharField, TextField, BooleanField
 from django_ckeditor_5.fields import CKEditor5Field
 
-from apps.shared.base import SlugBaseModel, CreateBaseModel, UUIDBaseModel
+from shared.models import SlugBaseModel, CreateBaseModel, UUIDBaseModel
 
 
 class Blog(UUIDBaseModel, SlugBaseModel, CreateBaseModel):

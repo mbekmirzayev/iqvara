@@ -1,7 +1,7 @@
 from django.db.models import Model, TextField, CharField, EmailField, FloatField
 from django_ckeditor_5.fields import CKEditor5Field
 
-from apps.shared.base import UUIDBaseModel, CreateBaseModel
+from apps.shared.models import UUIDBaseModel, CreateBaseModel
 
 
 class Settings(Model):

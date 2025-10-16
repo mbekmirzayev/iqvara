@@ -1,7 +1,7 @@
 from django.db.models import ForeignKey, CASCADE, CharField, PositiveIntegerField
 from django.db.models.enums import TextChoices
 from django.utils.translation import gettext_lazy as _
-from apps.shared.base import CreateBaseModel, UUIDBaseModel
+from apps.shared.models import CreateBaseModel, UUIDBaseModel
 
 
 class Order(CreateBaseModel, UUIDBaseModel):

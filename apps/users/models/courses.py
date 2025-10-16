@@ -6,12 +6,12 @@ from django.db.models.fields import URLField
 from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.fields import CKEditor5Field
 
-from apps.shared.base import SlugBaseModel, UUIDBaseModel, CreateBaseModel
+from apps.shared.models import SlugBaseModel, UUIDBaseModel, CreateBaseModel
 
 
 class Category(SlugBaseModel, UUIDBaseModel):
     name = CharField(max_length=100, unique=True)
-    description = TextField(blank=True)
+    description = TextField(blank=True)  # TODO fix
 
     class Meta:
         verbose_name = _("Category")
@@ -30,9 +30,10 @@ class Course(SlugBaseModel, UUIDBaseModel):
         INTERMEDIATE = 'intermediate', 'Intermediate'
         ADVANCED = 'advanced', 'Advanced'
 
-    students = ManyToManyField('users.User', blank=True, related_name='enrolled_students')
+    students = ManyToManyField('users.User', blank=True, through='users.Enrollment', related_name='enrolled_students')
     image = ImageField(upload_to='courses/')
-    instructor = ForeignKey('users.User', CASCADE, limit_choices_to={"role": "instructor"}, related_name='courses')
+    instructor = ForeignKey('users.User', CASCADE, limit_choices_to={"role": "instructor"},
+                            related_name='courses')  # TODO m2m
     category = ForeignKey('users.Category', CASCADE, related_name='courses')
     title = CharField(max_length=255, verbose_name=_("Course title"))
     description = CKEditor5Field()  # TODO ckeditor5
@@ -58,6 +59,16 @@ class Lesson(UUIDBaseModel, SlugBaseModel):
 
     def __str__(self):
         return f"{self.title}, {self.course}"
+
+
+class Enrollment(UUIDBaseModel, CreateBaseModel):
+    class Status(TextChoices):
+        IN_PROGRESS = 'in_progress', 'In Progress'
+        COMPLETED = 'completed', 'Completed'
+
+    student = ForeignKey('users.User', CASCADE, limit_choices_to={'role': 'student'}, related_name='enrollments')
+    course = ForeignKey('users.Course', CASCADE, related_name='students')
+    status = CharField(max_length=20, choices=Status.choices, default=Status.IN_PROGRESS)
 
 
 class Review(UUIDBaseModel, CreateBaseModel):

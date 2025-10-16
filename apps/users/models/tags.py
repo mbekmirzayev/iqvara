@@ -1,6 +1,6 @@
 from django.db.models import CharField
 
-from apps.shared.base import SlugBaseModel, CreateBaseModel, UUIDBaseModel
+from apps.shared.models import SlugBaseModel, CreateBaseModel, UUIDBaseModel
 
 
 class Tag(SlugBaseModel, CreateBaseModel , UUIDBaseModel):
