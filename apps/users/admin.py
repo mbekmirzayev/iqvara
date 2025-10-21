@@ -2,41 +2,39 @@ from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import Group
 
-from apps.users.models import Course, User, Category, Settings, Order, Blog, Comment, Step
+from apps.users.models import Course, User, Category, Settings, Payment, Blog, Comment, Step
 
 
 @admin.register(Settings)
 class SettingsModelAdmin(admin.ModelAdmin):
     list_display = ('phone', 'contact_email', 'support_email', 'address')
-    readonly_fields = ('latitude', 'longitude')
+    # readonly_fields = ('latitude', 'longitude')
 
     def has_add_permission(self, request):
         return not Settings.objects.exists()
 
 
-@admin.register(Order)
-class OrderModelAdmin(ModelAdmin):
-    list_display = ('amount',)
+@admin.register(Payment)
+class PaymentModelAdmin(ModelAdmin):
+    list_display = ('discount', 'course_name', 'course_price' , 'payment_type' , 'created_at')
+    readonly_fields = ('created_at',)
+
 
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'lesson_count', 'student_count',)
+    list_display = ('title','short_description', 'lesson_count', 'student_count', 'get_instructors')
     search_fields = ('title',)
     list_filter = ('title',)
 
-    def lesson_count(self, obj):
-        return obj.lessons.count()
-
-    lesson_count.short_description = 'Darslar soni'
+    @admin.display(description="Instructors")
+    def get_instructors(self, obj):
+        return ", ".join([i.full_name for i in obj.instructor.all()])
 
     def student_count(self, obj):
         return obj.students.count()
 
-    student_count.short_description = 'darsni sotib olgan studentlar soni'
 
-    def review_count(self, value):
-        return value.review
 
 
 @admin.register(Category)

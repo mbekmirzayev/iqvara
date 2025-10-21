@@ -18,17 +18,8 @@ class Settings(Model):
 
 
 class FAQ(UUIDBaseModel, CreateBaseModel):
-    # class Status(TextChoices):  # TODO ?
-    #     PENDING = 'pending', 'Pending'
-    #     ANSWERED = 'answered', 'Answered'
-
     question = TextField()
     answer = TextField()
-
-    # created_by = ForeignKey("users.User", CASCADE, related_name='faqs')
-    # status = CharField(max_length=20, choices=Status.choices, default=Status.PENDING)  # TODO ?
-    # created_at = DateTimeField(auto_now_add=True)
-    # answered_at = DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return f"FAQ ({self.question[:20]} , {self.answer[:20]})"

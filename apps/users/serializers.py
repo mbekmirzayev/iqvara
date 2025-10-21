@@ -4,6 +4,8 @@ from rest_framework.serializers import ModelSerializer
 
 from apps.users.models import User, Course, Category
 from apps.users.models import Lesson, Review
+from apps.users.models.payment import Payment
+from users.models import FAQ
 
 
 class CategorySerializer(ModelSerializer):
@@ -29,11 +31,6 @@ class ReViewModelSerializer(ModelSerializer):
         model = Review
         fields = "__all__"
 
-    def rating_validate(self, value):
-        if not 1 <= value <= 5:
-            raise ValidationError(" siz faqat 1 dan 5 gacha baholay olasiz")
-        return value
-
 
 class CourseModelSerializer(ModelSerializer):
     instructor = HiddenField(default=CurrentUserDefault())
@@ -48,9 +45,30 @@ class CourseModelSerializer(ModelSerializer):
                   'lesson', 'review', 'level'
                   ]
 
-# class FAQSerializer(ModelSerializer):
-#     created_by = StringRelatedField(read_only=True)
-#
-#     class Meta:
-#         model = FAQ
-#         fields = ['id', 'question', 'answer', 'created_by', 'status', 'created_at', 'answered_at']
+class PaymentModelSerializer(ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = "__all__"
+
+    def validate(self, data):
+        if data.get("payment_type") == "installment":
+            if not data.get("installment_months"):
+                raise ValidationError({"installment_months": "Required for installment payments"})
+            if not data.get("initial_payment_percent"):
+                raise ValidationError({"initial_payment_percent": "Required field"})
+            percent = float(data["initial_payment_percent"])
+            if not (29 <= percent <=50):
+                raise ValidationError({
+                    "initial_payment_percent": "Must be between 29% and 50%"
+                })
+        else:
+            data["installment_months"] = None
+            data["initial_payment_percent"] = None
+        return data
+
+
+class FaqModelSerializer(ModelSerializer):
+
+    class Meta:
+        model = FAQ
+        fields = "__all__"

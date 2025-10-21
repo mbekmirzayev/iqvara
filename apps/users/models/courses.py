@@ -1,17 +1,15 @@
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.db.models import DecimalField, IntegerField, ForeignKey, CASCADE, CharField, TextField, ImageField, \
+from django.db.models import DecimalField, ForeignKey, CASCADE, CharField, TextField, ImageField, \
     ManyToManyField, DurationField
 from django.db.models.enums import TextChoices
 from django.db.models.fields import URLField
 from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.fields import CKEditor5Field
 
-from apps.shared.models import SlugBaseModel, UUIDBaseModel, CreateBaseModel
+from shared.models import SlugBaseModel, UUIDBaseModel, CreateBaseModel
 
 
 class Category(SlugBaseModel, UUIDBaseModel):
     name = CharField(max_length=100, unique=True)
-    description = TextField(blank=True)  # TODO fix
 
     class Meta:
         verbose_name = _("Category")
@@ -20,28 +18,29 @@ class Category(SlugBaseModel, UUIDBaseModel):
     def __str__(self):
         return self.name
 
+    @property
     def get_courses(self):
         return self.courses.all()
 
 
 class Course(SlugBaseModel, UUIDBaseModel):
-    class CourseLevel(TextChoices):
-        BEGINNER = 'beginner', 'Beginner'
-        INTERMEDIATE = 'intermediate', 'Intermediate'
-        ADVANCED = 'advanced', 'Advanced'
-
+    category = ForeignKey('users.Category', CASCADE, related_name='courses')
+    short_description = CharField(max_length=100, )
+    full_description = CKEditor5Field()
+    title = CharField(max_length=255, verbose_name=_("Course title"))
     students = ManyToManyField('users.User', blank=True, through='users.Enrollment', related_name='enrolled_students')
     image = ImageField(upload_to='courses/')
-    instructor = ForeignKey('users.User', CASCADE, limit_choices_to={"role": "instructor"},
-                            related_name='courses')  # TODO m2m
-    category = ForeignKey('users.Category', CASCADE, related_name='courses')
-    title = CharField(max_length=255, verbose_name=_("Course title"))
-    description = CKEditor5Field()  # TODO ckeditor5
+    instructor = ManyToManyField('users.User', limit_choices_to={"role": "instructor"}, related_name='courses')
     price = DecimalField(max_digits=10, decimal_places=2)
-    # duration = IntegerField(help_text="Darslar davomiyligi (soatlarda)", editable=False) 23:16
-    duration = DurationField()
+    course_content = CKEditor5Field()
 
-    level = CharField(max_length=20, choices=CourseLevel.choices)
+    @property
+    def instructor_images(self):
+        return [i.image.url for i in self.instructor.all() if i.image]
+
+    @property
+    def lesson_count(self):
+        return self.lessons.count()
 
     class Meta:
         verbose_name = _("Course")
@@ -51,11 +50,19 @@ class Course(SlugBaseModel, UUIDBaseModel):
         return self.title
 
 
+
 class Lesson(UUIDBaseModel, SlugBaseModel):
+    class LessonStatus(TextChoices):
+        PRIVATE = "private", _("Private")
+        PUBLIC = "public", _("Public")
+
     course = ForeignKey('users.Course', CASCADE, related_name='lessons')
     title = CharField(max_length=100, )
     video_url = URLField()
-    lesson_content = TextField(blank=True, null=True)
+    lesson_content = CKEditor5Field(blank=True, null=True)
+    duration = DurationField()
+    lesson_status = CharField(choices=LessonStatus.choices, default=LessonStatus.PRIVATE)
+
 
     def __str__(self):
         return f"{self.title}, {self.course}"
@@ -63,8 +70,8 @@ class Lesson(UUIDBaseModel, SlugBaseModel):
 
 class Enrollment(UUIDBaseModel, CreateBaseModel):
     class Status(TextChoices):
-        IN_PROGRESS = 'in_progress', 'In Progress'
-        COMPLETED = 'completed', 'Completed'
+        IN_PROGRESS = 'in_progress', _('In Progress')
+        COMPLETED = 'completed', _('Completed')
 
     student = ForeignKey('users.User', CASCADE, limit_choices_to={'role': 'student'}, related_name='enrollments')
     course = ForeignKey('users.Course', CASCADE, related_name='students')
@@ -74,5 +81,5 @@ class Enrollment(UUIDBaseModel, CreateBaseModel):
 class Review(UUIDBaseModel, CreateBaseModel):
     student = ForeignKey('users.User', CASCADE, related_name='reviews')
     course = ForeignKey('users.Course', CASCADE)
-    rating = IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     comment = TextField(null=True, blank=True)
+    video_comment = URLField(blank=True, null=True)

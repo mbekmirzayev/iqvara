@@ -5,7 +5,8 @@ from rest_framework.viewsets import ModelViewSet
 
 from apps.users.models import Category, Course, User
 from apps.shared.permissions import IsInstructorOrAdmin
-from apps.users.serializers import UserModelSerializer, CategorySerializer, CourseModelSerializer
+from apps.users.serializers import UserModelSerializer, CategorySerializer, CourseModelSerializer, FaqModelSerializer
+from users.models import FAQ
 
 
 class UserListView(ListAPIView):
@@ -31,22 +32,6 @@ class CourseModelViewSet(ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('title', 'price',)
 
-from django.shortcuts import render
-
-def home_view(request):
-    return render(request, 'index.html')  # ../frontend/index.html emas
-
-
-# class FAQCreateView(CreateAPIView):
-#     queryset = FAQ.objects.all()
-#     serializer_class = FAQSerializer
-#     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-#
-#     def perform_create(self, serializer):
-#         serializer.save(created_by=self.request.user)
-#
-#
-# class FAQListView(ListAPIView):
-#     queryset = FAQ.objects.all()
-#     serializer_class = FAQSerializer
-#     permission_classes = [permissions.IsAdminUser]
+class FaqListAPIView(ListAPIView):
+    queryset = FAQ.objects.all()
+    serializer_class = FaqModelSerializer

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db.models import CharField, ImageField, TextChoices
+from django.utils.translation.trans_null import gettext_lazy as _
 
 
 class UserManager(BaseUserManager):
@@ -20,12 +21,12 @@ class UserManager(BaseUserManager):
         return user
 
 
-class User(AbstractUser):
+class  User(AbstractUser):
     class Status(TextChoices):
-        ADMIN = 'admin', 'Admin'
-        MANAGER = 'manager', 'Manager'
-        INSTRUCTOR = 'instructor', 'Instructor'
-        STUDENT = 'student', 'Student'
+        ADMIN = 'admin', _('Admin')
+        MANAGER = 'manager', _('Manager')
+        INSTRUCTOR = 'instructor', _('Instructor')
+        STUDENT = 'student', _('Student')
 
     role = CharField(max_length=20, choices=Status.choices, default=Status.STUDENT)
     phone = CharField(max_length=20, blank=True, null=True)

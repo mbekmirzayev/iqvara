@@ -5,6 +5,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+# APPS_DIR = BASE_DIR / 'apps'
+# sys.path.insert(0, str(APPS_DIR))
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
 load_dotenv(BASE_DIR / '.env')
