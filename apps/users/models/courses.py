@@ -25,14 +25,15 @@ class Category(SlugBaseModel, UUIDBaseModel):
 
 class Course(SlugBaseModel, UUIDBaseModel):
     category = ForeignKey('users.Category', CASCADE, related_name='courses')
-    short_description = CharField(max_length=100, )
+    short_description = CharField(max_length=100)
     full_description = CKEditor5Field()
     title = CharField(max_length=255, verbose_name=_("Course title"))
     students = ManyToManyField('users.User', blank=True, through='users.Enrollment', related_name='enrolled_students')
     image = ImageField(upload_to='courses/')
     instructor = ManyToManyField('users.User', limit_choices_to={"role": "instructor"}, related_name='courses')
     price = DecimalField(max_digits=10, decimal_places=2)
-    course_content = CKEditor5Field()
+    # lesson_count = ''
+    # duration
 
     @property
     def instructor_images(self):
@@ -50,7 +51,6 @@ class Course(SlugBaseModel, UUIDBaseModel):
         return self.title
 
 
-
 class Lesson(UUIDBaseModel, SlugBaseModel):
     class LessonStatus(TextChoices):
         PRIVATE = "private", _("Private")
@@ -63,7 +63,6 @@ class Lesson(UUIDBaseModel, SlugBaseModel):
     duration = DurationField()
     lesson_status = CharField(choices=LessonStatus.choices, default=LessonStatus.PRIVATE)
 
-
     def __str__(self):
         return f"{self.title}, {self.course}"
 
@@ -73,8 +72,8 @@ class Enrollment(UUIDBaseModel, CreateBaseModel):
         IN_PROGRESS = 'in_progress', _('In Progress')
         COMPLETED = 'completed', _('Completed')
 
-    student = ForeignKey('users.User', CASCADE, limit_choices_to={'role': 'student'}, related_name='enrollments')
-    course = ForeignKey('users.Course', CASCADE, related_name='students')
+    student = ForeignKey('users.User', CASCADE, limit_choices_to={'role': 'student'})
+    course = ForeignKey('users.Course', CASCADE)
     status = CharField(max_length=20, choices=Status.choices, default=Status.IN_PROGRESS)
 
 

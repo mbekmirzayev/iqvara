@@ -15,7 +15,7 @@ class Blog(UUIDBaseModel, SlugBaseModel, CreateBaseModel):
     tags = ManyToManyField('users.Tag', related_name='blogs', blank=True)
 
     class Meta:
-        ordering = _('-created_at',)
+        ordering = '-created_at',
         verbose_name = _('Blog')
         verbose_name_plural = _('Blogs')
 
@@ -28,12 +28,12 @@ class Blog(UUIDBaseModel, SlugBaseModel, CreateBaseModel):
 
 
 class Comment(UUIDBaseModel, CreateBaseModel):
-    user = ForeignKey('users.User', CASCADE, )
-    message = CharField(max_length=100, )
+    user = ForeignKey('users.User', CASCADE)
+    message = CharField(max_length=100)
     blog = ForeignKey('users.Blog', CASCADE, related_name='comments')
 
     class Meta:
-        ordering = _('-created_at',)
+        ordering = '-created_at',
         verbose_name = _('Comment')
         verbose_name_plural = _('Comments')
 

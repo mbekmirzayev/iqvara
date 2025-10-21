@@ -2,13 +2,10 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.fields import IntegerField, HiddenField, CurrentUserDefault
 from rest_framework.serializers import ModelSerializer
 
-from apps.users.models import User, Course, Category
-from apps.users.models import Lesson, Review
-from apps.users.models.payment import Payment
-from users.models import FAQ
+from users.models import FAQ, Lesson, Review, Payment, User, Course, Category
 
 
-class CategorySerializer(ModelSerializer):
+class CategoryModelSerializer(ModelSerializer):
     class Meta:
         model = Category
         fields = "__all__"
@@ -34,16 +31,16 @@ class ReViewModelSerializer(ModelSerializer):
 
 class CourseModelSerializer(ModelSerializer):
     instructor = HiddenField(default=CurrentUserDefault())
-    student_count = IntegerField( read_only=True)
-    lesson_count = IntegerField( read_only=True)
+    student_count = IntegerField(read_only=True)
+    lesson_count = IntegerField(read_only=True)
     lesson = LessonModelSerializer(read_only=True, many=True)
     review = ReViewModelSerializer(many=True, read_only=True)
 
     class Meta:
         model = Course
         fields = ['student_count', 'instructor', 'price', 'category', 'image', 'title', 'lesson_count',
-                  'lesson', 'review', 'level'
-                  ]
+                  'lesson', 'review']
+
 
 class PaymentModelSerializer(ModelSerializer):
     class Meta:
@@ -57,7 +54,7 @@ class PaymentModelSerializer(ModelSerializer):
             if not data.get("initial_payment_percent"):
                 raise ValidationError({"initial_payment_percent": "Required field"})
             percent = float(data["initial_payment_percent"])
-            if not (29 <= percent <=50):
+            if not (29 <= percent <= 50):
                 raise ValidationError({
                     "initial_payment_percent": "Must be between 29% and 50%"
                 })
@@ -68,7 +65,6 @@ class PaymentModelSerializer(ModelSerializer):
 
 
 class FaqModelSerializer(ModelSerializer):
-
     class Meta:
         model = FAQ
         fields = "__all__"
