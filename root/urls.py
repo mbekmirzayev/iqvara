@@ -1,18 +1,25 @@
+# root/urls.py
+from debug_toolbar.toolbar import debug_toolbar_urls
+from django.conf.global_settings import STATIC_ROOT
+from django.conf.urls.i18n import i18n_patterns
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
-from django.conf import settings
-from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-urlpatterns = [
+from root.settings import MEDIA_URL, MEDIA_ROOT, STATIC_URL
+
+urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
-    path('api/v1/', include('users.urls')),
+
+    # API
+    path('api/v1/', include('apps.users.urls')),
+
+    path('ckeditor5/', include('django_ckeditor_5.urls')),
+    path("i18n/", include("django.conf.urls.i18n")),
+
+    # Swagger
     path('api/schema', SpectacularAPIView.as_view(), name='schema'),
     path('', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-]
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += [
-        path('__debug__/', include(debug_toolbar.urls)),
-    ]
+) + static(MEDIA_URL, document_root=MEDIA_ROOT) + static(STATIC_URL,
+                                                         document_root=STATIC_ROOT) + debug_toolbar_urls()

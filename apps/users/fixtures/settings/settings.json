@@ -1,41 +1,47 @@
 [
   {
-    "model": "settings.settings",
-    "pk": 1,
+    "model": "users.setting",
+    "pk": "b11a9f22-4132-4c1a-b123-c1f9b213a901",
     "fields": {
       "longitude": 69.2401,
       "latitude": 41.2995,
-      "about_us": "<p>We are an online learning platform helping students reach their goals.</p>",
+      "about_us": "<p>Bizning platforma onlayn ta'lim uchun yaratilgan.</p>",
       "phone": "+998901234567",
-      "contact_email": "info@eduhub.uz",
-      "support_email": "support@eduhub.uz",
-      "address": "Tashkent, Yunusobod district, Amir Temur street 45"
+      "contact_email": "info@online.uz",
+      "support_email": "support@online.uz",
+      "address": "Toshkent shahri, Yunusobod tumani",
+      "created_at": "2025-02-01T10:00:00Z",
+      "updated_at": "2025-02-01T10:00:00Z"
     }
   },
   {
-    "model": "settings.settings",
-    "pk": 2,
+    "model": "users.setting",
+    "pk": "b21a9c32-5122-4d1b-a9c3-d1f1a123e881",
     "fields": {
-      "longitude": 69.2170,
-      "latitude": 41.3112,
-      "about_us": "<p>EduSpace provides professional IT courses with expert instructors.</p>",
-      "phone": "+998933456789",
-      "contact_email": "contact@eduspace.uz",
-      "support_email": "help@eduspace.uz",
-      "address": "Tashkent, Chilonzor district, Bunyodkor avenue 12"
+      "longitude": 69.2055,
+      "latitude": 41.3162,
+      "about_us": "<p>Dasturlashni o‘rganish uchun mukammal joy.</p>",
+      "phone": "+998909876543",
+      "contact_email": "contact@learn.uz",
+      "support_email": "help@learn.uz",
+      "address": "Chilonzor tumani, Toshkent",
+      "created_at": "2025-02-02T10:00:00Z",
+      "updated_at": "2025-02-02T10:00:00Z"
     }
   },
   {
-    "model": "settings.settings",
-    "pk": 3,
+    "model": "users.setting",
+    "pk": "b31a9d42-6222-4e1b-b2a3-f9f1a12b1991",
     "fields": {
-      "longitude": 69.2754,
-      "latitude": 41.3408,
-      "about_us": "<p>CodeLab is dedicated to improving programming education in Uzbekistan.</p>",
-      "phone": "+998907654321",
-      "contact_email": "info@codelab.uz",
-      "support_email": "support@codelab.uz",
-      "address": "Tashkent, Mirzo Ulugbek district, Minor street 24"
+      "longitude": 69.2112,
+      "latitude": 41.3120,
+      "about_us": "<p>O‘qituvchilar va talabalar uchun yagona tizim.</p>",
+      "phone": "+998971112233",
+      "contact_email": "edu@online.uz",
+      "support_email": "support@edu.uz",
+      "address": "Mirzo Ulug‘bek tumani, Toshkent",
+      "created_at": "2025-02-03T10:00:00Z",
+      "updated_at": "2025-02-03T10:00:00Z"
     }
   }
 ]

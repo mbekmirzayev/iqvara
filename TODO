@@ -3,6 +3,30 @@
 localhost:3000 react
 localhost:8000 drf
 
-Task
-1. modellar
-2. fixtures
+| №      | Model nomi      | Maqsadi                                                  | API kerakmi?                                                | Kim ishlatadi                                   | Tavsiya etilgan permission                                                |
+| ------ | --------------- | -------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------- |
+| 1️⃣    | **User**        | Foydalanuvchilarni saqlaydi (student, instructor, admin) | ✅ API kerak (ro‘yxatdan o‘tish, profilni ko‘rish/yangilash) | Barcha foydalanuvchilar                         | `IsAuthenticated` (get/put), `AllowAny` (register)                        |
+| 2️⃣    | **Course**      | Kurslar haqidagi ma’lumot                                | ✅ API kerak (kurslar ro‘yxati, tafsilotlari)                | Instructor, admin (yaratadi); student (ko‘radi) | `IsInstructorOrAdmin` (create/update/delete), `AllowAny` (list/retrieve)  |
+| 3️⃣    | **Category**    | Kurs kategoriyalari                                      | ✅ API kerak (kategoriya ro‘yxati uchun)                     | Admin (yaratadi), barcha (ko‘radi)              | `AllowAny` (GET), `IsAdminUser` (POST/PUT/DELETE)                         |
+| 4️⃣    | **Lesson**      | Kursdagi darslar                                         | ✅ API kerak                                                 | Instructor, admin (yaratadi), student (ko‘radi) | `IsInstructorOrAdmin` (create/update), `IsEnrolledOrReadOnly` (GET uchun) |
+| 5️⃣    | **CourseStep**  | Dars bosqichlari (qadamlar)                              | ✅ API kerak                                                 | Instructor, admin                               | `IsInstructorOrAdmin`                                                     |
+| 6️⃣    | **Enrollment**  | Talabaning kursga yozilishi                              | ✅ API kerak (user kursga yoziladi, holat ko‘radi)           | Student, admin                                  | `IsStudentOrAdmin`                                                        |
+| 7️⃣    | **Review**      | Kursga berilgan baho va fikrlar                          | ✅ API kerak (kurslar sahifasida ko‘rsatish)                 | Student (yozadi), barcha (ko‘radi)              | `IsAuthenticatedOrReadOnly`                                               |
+| 8️⃣    | **Payment**     | To‘lov ma’lumotlari                                      | ✅ API kerak (student to‘lov qiladi)                         | Student, admin                                  | `IsOwnerOrAdmin`                                                          |
+| 9️⃣    | **Blog**        | Blog maqolalar                                           | ✅ API kerak (ko‘rsatish, yangilash)                         | Admin, instructor (yaratadi), barcha (ko‘radi)  | `IsInstructorOrAdmin` (create/update/delete), `AllowAny` (list/retrieve)  |
+| 🔟     | **Comment**     | Blog izohlari                                            | ✅ API kerak                                                 | Student, admin                                  | `IsAuthenticatedOrReadOnly`                                               |
+| 1️⃣1️⃣ | **Step**        | Blogdagi qadamlar (agar mavjud)                          | ❌ API shart emas (blog bilan ichki ishlovchi model)         | Admin panel orqali                              | `IsAdminUser`                                                             |
+| 1️⃣2️⃣ | **Leaderboard** | Reyting tizimi                                           | ❌ API shart emas (dashboard uchun)                          | Admin, instructor                               | `IsAdminUser` yoki `ReadOnly` API                                         |
+| 1️⃣3️⃣ | **Setting**     | Sayt sozlamalari                                         | ❌ API shart emas                                            | Faqat admin                                     | `IsAdminUser`                                                             |
+| 1️⃣4️⃣ | **FAQ**         | Tez-tez so‘raladigan savollar                            | ✅ API kerak (frontendda ko‘rsatish uchun)                   | Admin (yaratadi), barcha (ko‘radi)              | `AllowAny` (GET), `IsAdminUser` (POST/PUT/DELETE)                         |
+| 1️⃣5️⃣ | **Tag**         | Kurs yoki blog teglari                                   | ✅ API kerak (filtrlash uchun)                               | Admin (yaratadi), barcha (ko‘radi)              | `AllowAny` (GET), `IsAdminUser` (POST/PUT/DELETE)                         |
+
+
+
+
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYxOTIzMjg5LCJpYXQiOjE3NjE5MjI5ODksImp0aSI6IjlkNTNmNGIyODA4ZDRhNjBiZmExMjg4MDk4YWI5NjM4IiwidXNlcl9pZCI6IjMzYTg4YzIwLTEzMjEtNGUxYy1hNzdhLTRkNWE3ZGEwNzhiOCJ9.a08ciR58nGBJmS1BN0vrDWY0uAMfOJ1L-OCk_uYIH6o",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2MjAwOTM4OSwiaWF0IjoxNzYxOTIyOTg5LCJqdGkiOiJmZjliMWE2ZjMzYTk0MGRhODZjYzUxNTQ3ZjViNTBhYSIsInVzZXJfaWQiOiIzM2E4OGMyMC0xMzIxLTRlMWMtYTc3YS00ZDVhN2RhMDc4YjgifQ.HPnvE5voB_VBu9mO9_vyYj2B7SMyc4GxyY2zjXUPY4k",
+  "id": "33a88c20-1321-4e1c-a77a-4d5a7da078b8",
+  "first_name": "Botir",
+  "last_name": "Tohirov",
+  "email": "admin@gmail.com"

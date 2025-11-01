@@ -1,0 +1,32 @@
+[
+  {
+    "model": "users.coursestep",
+    "pk": "11111111-aaaa-4bbb-cccc-111111111111",
+    "fields": {
+      "title": "Step 1: Getting Started",
+      "order_num": 1,
+      "course": "aaaaaaaa-bbbb-cccc-dddd-000000000001",
+      "slug": "step-1-getting-started"
+    }
+  },
+  {
+    "model": "users.coursestep",
+    "pk": "22222222-aaaa-4bbb-cccc-222222222222",
+    "fields": {
+      "title": "Step 2: Deep Dive",
+      "order_num": 2,
+      "course": "aaaaaaaa-bbbb-cccc-dddd-000000000001",
+      "slug": "step-2-deep-dive"
+    }
+  },
+  {
+    "model": "users.coursestep",
+    "pk": "33333333-aaaa-4bbb-cccc-333333333333",
+    "fields": {
+      "title": "Step 3: Final Project",
+      "order_num": 3,
+      "course": "aaaaaaaa-bbbb-cccc-dddd-000000000001",
+      "slug": "step-3-final-project"
+    }
+  }
+]

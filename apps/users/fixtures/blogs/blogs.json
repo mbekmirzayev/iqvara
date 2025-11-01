@@ -1,38 +1,14 @@
 [
   {
-    "model": "blogs.blog",
-    "pk": "21e7a9a3-9230-4d1f-b1c1-8c63e6a6d2c2",
+    "model": "users.blog",
+    "pk": "a341bdc3-4b92-4569-b8a2-1e3c0b7c67d1",
     "fields": {
-      "content": "<p>This article covers Django fundamentals and how to set up your first project.</p>",
-      "is_published": true,
-      "title": "Getting Started with Django",
-      "image": "blogs/django_intro.jpg",
-      "category": ["9a6de2e3-3c5a-44b3-913f-93a8973e2361"],
-      "tags": ["e1c90d85-542a-43f1-85c4-c274b5b16a9d"]
-    }
-  },
-  {
-    "model": "blogs.blog",
-    "pk": "c49bb7c4-089d-48f1-b1a5-2e7d7d3e5a0a",
-    "fields": {
-      "content": "<p>Learn how to apply data science techniques in real-world projects.</p>",
-      "is_published": true,
-      "title": "Data Science in Practice",
-      "image": "blogs/data_science.jpg",
-      "category": ["0d1a4b7f-21d3-4b2a-9d2b-2b556f98ad41"],
-      "tags": ["e1c90d85-542a-43f1-85c4-c274b5b16a9d", "a3b6e9f5-c48a-4b84-a6a2-71f48b714bdf"]
-    }
-  },
-  {
-    "model": "blogs.blog",
-    "pk": "9c62b1c3-4b27-40b2-9124-943ad3b7d35e",
-    "fields": {
-      "content": "<p>Explore Flutter framework and its power for cross-platform app development.</p>",
-      "is_published": false,
-      "title": "Flutter: One Codebase for All Platforms",
-      "image": "blogs/flutter_post.jpg",
-      "category": ["e2d88c9f-2510-4699-81f3-17c0e21b847c"],
-      "tags": ["a3b6e9f5-c48a-4b84-a6a2-71f48b714bdf"]
+      "title": "Backend Development Trends 2025",
+      "slug": "backend-development-trends-2025",
+      "content": "In 2025, Python and Django remain dominant backend technologies...",
+      "author": "a9c882e1-d4b3-4ac3-9831-9b8df68a3219",
+      "created_at": "2025-03-08T11:00:00Z",
+      "updated_at": "2025-03-09T09:45:00Z"
     }
   }
 ]

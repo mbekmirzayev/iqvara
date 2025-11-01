@@ -1,47 +1,61 @@
 [
   {
     "model": "users.user",
-    "pk": "9d91e6c7-f22c-4c64-bc5d-7db8b60113cf",
+    "pk": "b7f12c64-4b4f-4b83-9c0f-2c6d6d1e4c01",
     "fields": {
-      "username": "admin",
-      "email": "admin@eduhub.uz",
+      "email": "admin@example.com",
       "role": "admin",
+      "phone": "+998901112233",
+      "image": "images/demo1.jpg",
+      "password": "pbkdf2_sha256$600000$demo$hashedpassword1",
       "is_superuser": true,
       "is_staff": true,
-      "is_active": true,
-      "password": "pbkdf2_sha256$720000$E6ZLkGJ8zvGrM6oQKcMc1a$Z7z7g9U4fF+Qm5MNE1lTtEYOdCw1DPLHqP6AYbCSQ7Y=",
-      "phone": "+998901112233",
-      "image": "users/admin.jpg"
+      "is_active": true
+
     }
   },
   {
     "model": "users.user",
-    "pk": "c23bf5a1-4a3f-4960-bb37-12e2e85a438f",
+    "pk": "a9c882e1-d4b3-4ac3-9831-9b8df68a3219",
     "fields": {
-      "username": "instructor1",
-      "email": "instructor@eduhub.uz",
-      "role": "instructor",
+      "email": "manager@example.com",
+      "role": "manager",
+      "phone": "+998907778899",
+      "image": "images/demo2.jpg",
+      "password": "pbkdf2_sha256$600000$demo$hashedpassword2",
       "is_superuser": false,
       "is_staff": true,
-      "is_active": true,
-      "password": "pbkdf2_sha256$720000$SgHnM0r5bP91kT3a4sV1Wv$P7bxOX0zN0fgpUcwQeT7smKNR0spENP7WcvT+lbm/wg=",
-      "phone": "+998902224455",
-      "image": "users/instructor.jpg"
+      "is_active": true
     }
   },
   {
     "model": "users.user",
-    "pk": "e9b4f91d-8f6c-4c2c-b83f-0ff15de4c4c0",
+    "pk": "f43b1239-0020-43c0-b1f7-7b29b5ff233c",
     "fields": {
-      "username": "student1",
-      "email": "student@eduhub.uz",
-      "role": "student",
+      "email": "instructor@example.com",
+      "role": "instructor",
+      "phone": "+998905551122",
+      "image": "images/demo3.jpg",
+      "password": "pbkdf2_sha256$600000$demo$hashedpassword3",
       "is_superuser": false,
       "is_staff": false,
-      "is_active": true,
-      "password": "pbkdf2_sha256$720000$L5yAqz8zK7eVb9nR9oZC5u$ScQx7EdN8mFy8D2P7u3t6wXjTr7yGmCPHPJYyzgKQGA=",
-      "phone": "+998933336677",
-      "image": "users/student.jpg"
+      "is_active": true
+
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "e1c6fd57-2782-4f5c-8fbb-f50c6e8751c9",
+    "fields": {
+      "email": "student@example.com",
+      "role": "student",
+      "phone": "+998933334455",
+      "image": "images/demo4.jpg",
+      "password": "pbkdf2_sha256$600000$demo$hashedpassword4",
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true
+
     }
   }
 ]

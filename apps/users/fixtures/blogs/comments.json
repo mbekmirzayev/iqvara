@@ -1,29 +1,35 @@
 [
   {
-    "model": "blogs.comment",
-    "pk": "f5a2b2b6-9b40-4b09-a33c-7a41ec248173",
+    "model": "users.comment",
+    "pk": "ab15a3d2-913b-4b5d-a911-c0b88e0b2a14",
     "fields": {
-      "user": "9d91e6c7-f22c-4c64-bc5d-7db8b60113cf",
-      "message": "Great explanation! Django seems easier than I thought.",
-      "blog": "21e7a9a3-9230-4d1f-b1c1-8c63e6a6d2c2"
+      "user": "e1c6fd57-2782-4f5c-8fbb-f50c6e8751c9",
+      "blog": "b41e1bca-7e12-4c11-a731-f9c3b0d2a1b3",
+      "message": "Ajoyib maqola, foydali ma'lumotlar bor.",
+      "created_at": "2025-02-10T10:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
     }
   },
   {
-    "model": "blogs.comment",
-    "pk": "c1d4b61e-7cc3-45e0-b22a-2f8bb650c36a",
+    "model": "users.comment",
+    "pk": "bc91e3a2-3f2c-431f-a1b3-d3a1c09a73d2",
     "fields": {
-      "user": "c23bf5a1-4a3f-4960-bb37-12e2e85a438f",
-      "message": "Loved the data science examples! Very practical.",
-      "blog": "c49bb7c4-089d-48f1-b1a5-2e7d7d3e5a0a"
+      "user": "e2f3fa76-19a4-42f8-b2f2-9f4c4bb21ef2",
+      "blog": "c21a9f1e-4b11-4921-b8a2-d4f99a12a7d0",
+      "message": "Men bu darsni sinab ko‘rdim, ajoyib ishlaydi.",
+      "created_at": "2025-02-11T10:00:00Z",
+      "updated_at": "2025-02-11T10:00:00Z"
     }
   },
   {
-    "model": "blogs.comment",
-    "pk": "0a93d3e1-28fd-4b67-8e6b-12a9739aef55",
+    "model": "users.comment",
+    "pk": "d41e8b22-7191-421a-a812-f8123c3a91d3",
     "fields": {
-      "user": "e9b4f91d-8f6c-4c2c-b83f-0ff15de4c4c0",
-      "message": "Excited to try Flutter after reading this!",
-      "blog": "9c62b1c3-4b27-40b2-9124-943ad3b7d35e"
+      "user": "e3b8c932-3194-4e2e-bd4a-3b5f82e7f00a",
+      "blog": "d88a11b3-422b-48c1-a992-10b8a9e2b001",
+      "message": "Yangi boshlovchilar uchun juda qulay darslar.",
+      "created_at": "2025-02-12T10:00:00Z",
+      "updated_at": "2025-02-12T10:00:00Z"
     }
   }
 ]

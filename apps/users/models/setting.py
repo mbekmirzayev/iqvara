@@ -4,7 +4,7 @@ from django_ckeditor_5.fields import CKEditor5Field
 from apps.shared.models import UUIDBaseModel, CreateBaseModel
 
 
-class Settings(Model):
+class Setting(Model):
     longitude = FloatField(null=True)
     latitude = FloatField(null=True)
     about_us = CKEditor5Field()  # ckeditor5
@@ -14,7 +14,7 @@ class Settings(Model):
     address = TextField()
 
     def __str__(self):
-        return f"Settings ({self.contact_email})"
+        return f"Setting ({self.contact_email})"
 
 
 class FAQ(UUIDBaseModel, CreateBaseModel):

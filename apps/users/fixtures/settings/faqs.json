@@ -1,26 +1,12 @@
 [
   {
-    "model": "settings.faq",
-    "pk": "e3b3c5f4-02da-4f5d-b9aa-38d1a6b70ed5",
+    "model": "users.faq",
+    "pk": "f82e51d4-2c41-4b3b-a923-9c92b3b70e23",
     "fields": {
-      "question": "How can I enroll in a course?",
-      "answer": "You can enroll by creating an account and clicking on the 'Enroll Now' button on any course page."
-    }
-  },
-  {
-    "model": "settings.faq",
-    "pk": "b5c13a4f-5f39-4f8c-92d5-68e1b6d4a85b",
-    "fields": {
-      "question": "Can I get a refund after purchasing a course?",
-      "answer": "Yes, refunds are available within 7 days of purchase if less than 10% of the course has been completed."
-    }
-  },
-  {
-    "model": "settings.faq",
-    "pk": "a47e17a1-7c54-43f5-89e7-df6f06f82a5a",
-    "fields": {
-      "question": "Do you provide certificates?",
-      "answer": "Yes, we provide completion certificates for all paid courses once you finish them."
+      "question": "Qanday qilib kursga yozilaman?",
+      "answer": "Siz ro‘yxatdan o‘tganingizdan so‘ng, kursni tanlab to‘lov qilasiz.",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:30:00Z"
     }
   }
 ]

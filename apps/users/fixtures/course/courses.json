@@ -1,47 +1,41 @@
 [
   {
-    "model": "courses.course",
-    "pk": "aa201b61-9f4b-4ff8-9b53-c98b18a2e2a2",
+    "model": "users.course",
+    "pk": "bb12f8f1-12cd-4c9d-9e8b-b123d43190f1",
     "fields": {
-      "students": [],
-      "image": "courses/django_course.jpg",
-      "instructor": "b312f6a3-9d1b-49f4-9b9c-6fd875d25b15",
-      "category": "9a6de2e3-3c5a-44b3-913f-93a8973e2361",
-      "title": "Django for Beginners",
-      "description": "Learn Django framework step by step and build production-ready web apps.",
-      "price": "99.99",
-      "duration": "48:00:00",
-      "level": "beginner"
+      "title": "Python for Beginners",
+      "slug": "python-for-beginners",
+      "short_description": "Learn Python from scratch.",
+      "full_description": "Learn Pyosihdivbiljvew9gvybia;nknssbvehawb;.",
+      "price": 1200000,
+      "duration": 40,
+      "category": "c201a1f3-12b4-4cde-b101-003d7fdd4af1"
     }
   },
   {
-    "model": "courses.course",
-    "pk": "f2c97cb1-ffb2-41ef-9de0-7ec8125b76e0",
+    "model": "users.course",
+    "pk": "cc92e7f4-bb7d-4ad1-9cd1-31c291b60d77",
     "fields": {
-      "students": [],
-      "image": "courses/data_science.jpg",
-      "instructor": "b312f6a3-9d1b-49f4-9b9c-6fd875d25b15",
-      "category": "0d1a4b7f-21d3-4b2a-9d2b-2b556f98ad41",
-      "title": "Data Science Bootcamp",
-      "description": "Hands-on Python data science and machine learning training.",
-      "price": "149.99",
-      "duration": "72:00:00",
-      "level": "intermediate"
+      "title": "UI/UX Design Basics",
+      "slug": "ui-ux-design-basics",
+      "short_description": "Learn modern design principles.",
+      "full_description": "asiytulibn;ofhweugiubnfasbdiytfiyuleibw;ano.",
+      "price": 950000,
+      "duration": 40,
+      "category": "d34b8a2a-fc91-4e3d-8f7a-47e73f7996d9"
     }
   },
   {
-    "model": "courses.course",
-    "pk": "cb2e184b-404f-44ff-b61c-6cc3f2a2ad4e",
+    "model": "users.course",
+    "pk": "aa51a8a4-dc82-4baf-b0b5-76fef87e91e2",
     "fields": {
-      "students": [],
-      "image": "courses/flutter_course.jpg",
-      "instructor": "d712fcb2-3df9-4c78-b7b3-3f1c61efdcab",
-      "category": "e2d88c9f-2510-4699-81f3-17c0e21b847c",
-      "title": "Flutter Mobile Development",
-      "description": "Develop beautiful and fast mobile apps using Flutter and Dart.",
-      "price": "129.99",
-      "duration": "60:00:00",
-      "level": "advanced"
+      "title": "Digital Marketing 101",
+      "slug": "digital-marketing-101",
+      "short_description": "Boost your marketing skills.",
+      "full_description": "asiytulibn;ofhweugiubnfasbdiytfiyuleibw;ano.",
+      "price": 880000,
+      "duration": 40,
+      "category": "a6df9b1c-33c2-4c0f-b4c0-cb517a5b924b"
     }
   }
 ]

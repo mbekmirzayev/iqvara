@@ -10,7 +10,7 @@ python manage.py loaddata apps/fixtures/course/reviews.json
 python manage.py loaddata apps/fixtures/blogs/blogs.json
 python manage.py loaddata apps/fixtures/blogs/steps.json
 python manage.py loaddata apps/fixtures/blogs/comments.json
-python manage.py loaddata apps/fixtures/orders/orders.json
+python manage.py loaddata apps/fixtures/payments/payments.json
 python manage.py loaddata apps/fixtures/settings/settings.json
 python manage.py loaddata apps/fixtures/settings/faqs.json
 echo "✅ All fixtures loaded successfully!"

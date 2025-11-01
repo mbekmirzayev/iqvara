@@ -1,26 +1,29 @@
 [
   {
-    "model": "tags.tag",
-    "pk": "e1c90d85-542a-43f1-85c4-c274b5b16a9d",
-    "fields": {
-      "title": "Django",
-      "slug": "django"
-    }
-  },
-  {
-    "model": "tags.tag",
-    "pk": "a3b6e9f5-c48a-4b84-a6a2-71f48b714bdf",
+    "model": "users.tag",
+    "pk": "a1f2b3c4-1122-4311-b212-d9e8a112b901",
     "fields": {
       "title": "Python",
-      "slug": "python"
+      "slug": "python",
+      "created_at": "2025-02-01T09:00:00Z"
     }
   },
   {
-    "model": "tags.tag",
-    "pk": "b7c4d9e2-57b8-4e32-b1a8-9d6c3cf10b2f",
+    "model": "users.tag",
+    "pk": "b2c3d4e5-2233-4422-b323-e8b9b223c812",
     "fields": {
-      "title": "Flutter",
-      "slug": "flutter"
+      "title": "Django",
+      "slug": "django",
+      "created_at": "2025-02-02T09:00:00Z"
+    }
+  },
+  {
+    "model": "users.tag",
+    "pk": "c3d4e5f6-3344-4533-c434-f7a8c334d723",
+    "fields": {
+      "title": "REST API",
+      "slug": "rest-api",
+      "created_at": "2025-02-03T09:00:00Z"
     }
   }
 ]

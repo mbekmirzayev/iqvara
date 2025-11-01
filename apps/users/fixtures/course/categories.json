@@ -1,26 +1,26 @@
 [
   {
-    "model": "courses.category",
-    "pk": "9a6de2e3-3c5a-44b3-913f-93a8973e2361",
+    "model": "users.category",
+    "pk": "c201a1f3-12b4-4cde-b101-003d7fdd4af1",
     "fields": {
-      "name": "Web Development",
-      "description": "Learn to build modern and scalable web apps using Django and React."
+      "name": "Programming",
+      "slug": "programming"
     }
   },
   {
-    "model": "courses.category",
-    "pk": "0d1a4b7f-21d3-4b2a-9d2b-2b556f98ad41",
+    "model": "users.category",
+    "pk": "d34b8a2a-fc91-4e3d-8f7a-47e73f7996d9",
     "fields": {
-      "name": "Data Science",
-      "description": "Comprehensive guide to data analysis and machine learning with Python."
+      "name": "Design",
+      "slug": "design"
     }
   },
   {
-    "model": "courses.category",
-    "pk": "e2d88c9f-2510-4699-81f3-17c0e21b847c",
+    "model": "users.category",
+    "pk": "a6df9b1c-33c2-4c0f-b4c0-cb517a5b924b",
     "fields": {
-      "name": "Mobile Development",
-      "description": "Learn to create high-performance cross-platform mobile apps."
+      "name": "Marketing",
+      "slug": "marketing"
     }
   }
 ]

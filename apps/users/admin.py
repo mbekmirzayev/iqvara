@@ -2,27 +2,49 @@ from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import Group
 
-from apps.users.models import Course, User, Category, Settings, Payment, Blog, Comment, Step
+from apps.users.models import Course, User, Category, Setting, Payment, Blog, Comment, Step
+from users.models import Tag, FAQ, Lesson, CourseStep, Enrollment, Review, Leaderboard
 
 
-@admin.register(Settings)
-class SettingsModelAdmin(admin.ModelAdmin):
+# users.py
+@admin.register(User)
+class UserAdmin(ModelAdmin):
+    list_display = ( 'email', 'role', 'is_active', 'is_staff')
+    list_filter = ('role', 'is_staff', 'is_superuser', 'is_active')
+
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Permissions', {'fields': ('role', 'is_active', 'is_staff', 'is_superuser')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+
+# tags.py
+@admin.register(Tag)
+class TagModelAdmin(ModelAdmin):
+    list_display = ('title' , )
+
+# setting.py
+@admin.register(Setting)
+class SettingsModelAdmin(ModelAdmin):
     list_display = ('phone', 'contact_email', 'support_email', 'address')
     # readonly_fields = ('latitude', 'longitude')
 
     def has_add_permission(self, request):
-        return not Settings.objects.exists()
+        return not Setting.objects.exists()
 
+@admin.register(FAQ)
+class FAQModelAdmin(ModelAdmin):
+    list_display = ('question', 'answer')
 
+# payment.py
 @admin.register(Payment)
 class PaymentModelAdmin(ModelAdmin):
     list_display = ('discount', 'course_name', 'course_price' , 'payment_type' , 'created_at')
     readonly_fields = ('created_at',)
 
-
-
+# course.py
 @admin.register(Course)
-class CourseAdmin(admin.ModelAdmin):
+class CourseAdmin(ModelAdmin):
     list_display = ('title','short_description', 'lesson_count', 'student_count', 'get_instructors')
     search_fields = ('title',)
     list_filter = ('title',)
@@ -34,44 +56,48 @@ class CourseAdmin(admin.ModelAdmin):
     def student_count(self, obj):
         return obj.students.count()
 
-
-
-
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(ModelAdmin):
     list_display = ('name', 'slug')
     search_fields = ('name', 'slug')
     # prepopulated_fields = {"slug": ("name",)}
     list_filter = ('name',)
     ordering = ('name',)
 
+@admin.register(Lesson)
+class LessonModelAdmin(ModelAdmin):
+    list_display = ('step' , 'title' ,'video_url' , 'lesson_content' , 'duration' , 'lesson_status')
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'role', 'is_active', 'is_staff')
-    list_filter = ('role', 'is_staff', 'is_superuser', 'is_active')
+@admin.register(CourseStep)
+class CourseStepModelAdmin(ModelAdmin):
+    list_display = ('course' , 'order_num' , 'title')
 
-    fieldsets = (
-        (None, {'fields': ('username', 'email', 'password')}),
-        ('Permissions', {'fields': ('role', 'is_active', 'is_staff', 'is_superuser')}),
-        ('Important dates', {'fields': ('last_login', 'date_joined')}),
-    )
+@admin.register(Enrollment)
+class EnrollmentModelAdmin(ModelAdmin):
+    list_display = ('course' , 'student' , 'status')
 
+@admin.register(Review)
+class ReviewModelAdmin(ModelAdmin):
+    list_display = ('course' , 'student' , 'comment' , 'video_comment')
+
+# blogs.py
 @admin.register(Blog)
-class BlogModelAdmin(admin.ModelAdmin):
+class BlogModelAdmin(ModelAdmin):
     list_display = ('title' , 'image' , 'is_published' , 'content')
     list_filter = ('category', 'tags', 'is_published')
 
-
 @admin.register(Comment)
-class CommentModelAdmin(admin.ModelAdmin):
+class CommentModelAdmin(ModelAdmin):
     list_display = ('user', 'message', 'created_at')
     list_filter = ('user', 'created_at')
 
-
 @admin.register(Step)
-class StepModelAdmin(admin.ModelAdmin):
+class StepModelAdmin(ModelAdmin):
     list_display = 'title',
+
+@admin.register(Leaderboard)
+class LeaderboardModelAdmin(ModelAdmin):
+    list_display = ('user' , 'rank' , 'points')
 
 
 admin.site.unregister(Group)
