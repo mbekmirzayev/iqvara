@@ -36,8 +36,8 @@ class User(AbstractUser, UUIDBaseModel):
     phone = CharField(max_length=20, blank=True, null=True)
     image = ImageField(upload_to='users/', null=True, blank=True)
 
-    USERNAME_FIELD = 'email'       # 🔥 email orqali login
-    REQUIRED_FIELDS = []           # superuser yaratishda boshqa fieldlar shart emas
+    USERNAME_FIELD = 'email'  # 🔥 email orqali login
+    REQUIRED_FIELDS = []  # superuser yaratishda boshqa fieldlar shart emas
 
     objects = UserManager()
 
@@ -45,14 +45,18 @@ class User(AbstractUser, UUIDBaseModel):
         return f"{self.email} ({self.role})"
 
     # Rollar uchun helper funksiyalar
+    @property
     def is_admin(self):
         return self.role == self.Status.ADMIN or self.is_superuser
 
+    @property
     def is_manager(self):
         return self.role == self.Status.MANAGER
 
+    @property
     def is_instructor(self):
         return self.role == self.Status.INSTRUCTOR
 
+    @property
     def is_student(self):
         return self.role == self.Status.STUDENT

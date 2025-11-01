@@ -1,5 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+
 from users.views import (
     UserModelViewSet, UserListAPIView,
     CategoryViewSet, CategoryListAPIView,
@@ -26,7 +27,7 @@ urlpatterns = [
 
     # ListAPIView yoki CreateAPIView lar
     path('user-list', UserListAPIView.as_view(), name='user-list'),
-    path('category-list', CategoryListAPIView.as_view(), name='category-list'),
+    path('categories', CategoryListAPIView.as_view(), name='category-list'),
 
     # Courses-related
     path('course-steps', CourseStepListAPIView.as_view(), name='course-steps'),
@@ -40,11 +41,11 @@ urlpatterns = [
     path('leaderboard', LeaderBoardListAPIView.as_view(), name='leaderboard'),
     path('faq', FaqListAPIView.as_view(), name='faq'),
     path('tags', TagListAPIView.as_view(), name='tags'),
-    path('setting' ,SettingsListAPIView.as_view(), name='settings'),
+    path('setting', SettingsListAPIView.as_view(), name='settings'),
     # Comments
     path('comments/', CommentCreateListAPIView.as_view(), name='comment-list-create'),
 
     # Auth (Send / Verify code)
-    path('auth/Register', RegisterAPIView.as_view(), name='send-code'),
-    path('auth/Login', VerifyCodeAPIView.as_view(), name='verify-code'),
+    path('auth/register', RegisterAPIView.as_view(), name='send-code'),
+    path('auth/login', VerifyCodeAPIView.as_view(), name='verify-code'),
 ]

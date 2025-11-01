@@ -21,6 +21,7 @@ from users.utils import send_code
 
 OTP_STORAGE = {}
 
+
 @extend_schema(tags=['users'])
 class UserModelViewSet(ModelViewSet):
     queryset = User.objects.all()
@@ -36,15 +37,17 @@ class UserModelViewSet(ModelViewSet):
             permission_classes = [IsOwnerOrAdmin]
         elif self.action == 'destroy':
             permission_classes = [IsAdminUser]
-        else :
+        else:
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
+
 
 @extend_schema(tags=['users'])
 class UserListAPIView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
     permission_classes = [IsAdminUser]
+
 
 @extend_schema(tags=["Category"])
 class CategoryListAPIView(ListAPIView):
@@ -54,13 +57,13 @@ class CategoryListAPIView(ListAPIView):
     filterset_fields = ('name',)
     permission_classes = [AllowAny]
 
+
 @extend_schema(tags=["Category"])
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategoryModelSerializer
     permission_classes = [IsAdminUser]
     http_method_names = ['post', 'put', 'patch', 'delete']
-
 
 
 @extend_schema(tags=["Course "])
@@ -83,11 +86,13 @@ class CourseModelViewSet(ModelViewSet):
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
 
+
 @extend_schema(tags=["Lesson"])
 class LessonViewSet(ModelViewSet):
     queryset = Lesson.objects.all()
     serializer_class = LessonModelSerializer
-    http_method_names = ['get','post', 'put',  'delete']
+    http_method_names = ['get', 'post', 'put', 'delete']
+
     def get_permissions(self):
         if self.action == 'list':
             permission_classes = [AllowAny]
@@ -101,11 +106,13 @@ class LessonViewSet(ModelViewSet):
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
 
+
 @extend_schema(tags=["Course "])
 class CourseStepListAPIView(ListAPIView):
     queryset = CourseStep.objects.all()
     serializer_class = CourseStepModelSerializer
     permission_classes = [AllowAny]
+
 
 @extend_schema(tags=["Review"])
 class ReviewViewSet(ModelViewSet):
@@ -113,21 +120,23 @@ class ReviewViewSet(ModelViewSet):
     http_method_names = ['get', 'post', 'put', 'delete']
 
     def get_permissions(self):
-        if self.action in ['list' , 'retrieve']:
+        if self.action in ['list', 'retrieve']:
             permission_classes = [AllowAny]
         elif self.action == 'create':
             permission_classes = [IsStudent]
-        elif self.action in ['update' , 'destroy']:
+        elif self.action in ['update', 'destroy']:
             permission_classes = [IsOwnerOrAdmin]
         else:
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
 
+
 @extend_schema(tags=["Enrollment & Payment"])
-class EnrollmentCreateListAPIView(ListAPIView , CreateAPIView):
+class EnrollmentCreateListAPIView(ListAPIView, CreateAPIView):
     queryset = Enrollment.objects.all()
     serializer_class = EnrollmentModelSerializer
     permission_classes = [IsStudent]
+
 
 @extend_schema(tags=["Enrollment & Payment"])
 class EnrollmentDestroyAPIView(DestroyAPIView):
@@ -135,11 +144,13 @@ class EnrollmentDestroyAPIView(DestroyAPIView):
     serializer_class = EnrollmentModelSerializer
     permission_classes = [IsStudentOrAdmin]
 
+
 @extend_schema(tags=["Enrollment & Payment"])
-class PaymentCreateListAPIView(ListAPIView , CreateAPIView):
+class PaymentCreateListAPIView(ListAPIView, CreateAPIView):
     queryset = Payment.objects.all()
     serializer_class = PaymentModelSerializer
     permission_classes = [IsStudentOrAdmin]
+
 
 @extend_schema(tags=["LeaderBoard"])
 class LeaderBoardListAPIView(ListAPIView):
@@ -154,6 +165,7 @@ class FaqListAPIView(ListAPIView):
     serializer_class = FaqModelSerializer
     permission_classes = [AllowAny]
 
+
 @extend_schema(tags=["Settings & FAQ"])
 class SettingsListAPIView(ListAPIView):
     queryset = Setting.objects.all()
@@ -167,22 +179,24 @@ class TagListAPIView(ListAPIView):
     serializer_class = TagModelSerializer
     permission_classes = [AllowAny]
 
+
 @extend_schema(tags=["Blogs"])
 class BlogModelViewSet(ModelViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogModelSerializer
-
 
     def get_permissions(self):
         if self.action in ['create', 'retrieve', 'update', 'destroy']:
             return [IsAuthenticated(), IsInstructorOrAdmin()]
         return [AllowAny(), ]
 
+
 @extend_schema(tags=["Comments"])
-class CommentCreateListAPIView(ListAPIView , CreateAPIView):
+class CommentCreateListAPIView(ListAPIView, CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated]
+
 
 @extend_schema(tags=["Auth"])
 class RegisterAPIView(APIView):
@@ -246,5 +260,3 @@ class UserProfileViewSet(ModelViewSet):
 
     def get_object(self):
         return self.request.user
-
-

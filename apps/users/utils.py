@@ -1,5 +1,3 @@
-import random
-import re
 from django.core.cache import cache
 from rest_framework import status
 from rest_framework.exceptions import ValidationError

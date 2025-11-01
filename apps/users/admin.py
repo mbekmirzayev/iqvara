@@ -9,7 +9,7 @@ from users.models import Tag, FAQ, Lesson, CourseStep, Enrollment, Review, Leade
 # users.py
 @admin.register(User)
 class UserAdmin(ModelAdmin):
-    list_display = ( 'email', 'role', 'is_active', 'is_staff')
+    list_display = ('email', 'role', 'is_active', 'is_staff')
     list_filter = ('role', 'is_staff', 'is_superuser', 'is_active')
 
     fieldsets = (
@@ -18,34 +18,40 @@ class UserAdmin(ModelAdmin):
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
 
+
 # tags.py
 @admin.register(Tag)
 class TagModelAdmin(ModelAdmin):
-    list_display = ('title' , )
+    list_display = ('title',)
+
 
 # setting.py
 @admin.register(Setting)
 class SettingsModelAdmin(ModelAdmin):
     list_display = ('phone', 'contact_email', 'support_email', 'address')
+
     # readonly_fields = ('latitude', 'longitude')
 
     def has_add_permission(self, request):
         return not Setting.objects.exists()
 
+
 @admin.register(FAQ)
 class FAQModelAdmin(ModelAdmin):
     list_display = ('question', 'answer')
 
+
 # payment.py
 @admin.register(Payment)
 class PaymentModelAdmin(ModelAdmin):
-    list_display = ('discount', 'course_name', 'course_price' , 'payment_type' , 'created_at')
+    list_display = ('discount', 'course_name', 'course_price', 'payment_type', 'created_at')
     readonly_fields = ('created_at',)
+
 
 # course.py
 @admin.register(Course)
 class CourseAdmin(ModelAdmin):
-    list_display = ('title','short_description', 'lesson_count', 'student_count', 'get_instructors')
+    list_display = ('title', 'short_description', 'lesson_count', 'student_count', 'get_instructors')
     search_fields = ('title',)
     list_filter = ('title',)
 
@@ -56,6 +62,7 @@ class CourseAdmin(ModelAdmin):
     def student_count(self, obj):
         return obj.students.count()
 
+
 @admin.register(Category)
 class CategoryAdmin(ModelAdmin):
     list_display = ('name', 'slug')
@@ -64,40 +71,48 @@ class CategoryAdmin(ModelAdmin):
     list_filter = ('name',)
     ordering = ('name',)
 
+
 @admin.register(Lesson)
 class LessonModelAdmin(ModelAdmin):
-    list_display = ('step' , 'title' ,'video_url' , 'lesson_content' , 'duration' , 'lesson_status')
+    list_display = ('step', 'title', 'video_url', 'lesson_content', 'duration', 'lesson_status')
+
 
 @admin.register(CourseStep)
 class CourseStepModelAdmin(ModelAdmin):
-    list_display = ('course' , 'order_num' , 'title')
+    list_display = ('course', 'order_num', 'title')
+
 
 @admin.register(Enrollment)
 class EnrollmentModelAdmin(ModelAdmin):
-    list_display = ('course' , 'student' , 'status')
+    list_display = ('course', 'student', 'status')
+
 
 @admin.register(Review)
 class ReviewModelAdmin(ModelAdmin):
-    list_display = ('course' , 'student' , 'comment' , 'video_comment')
+    list_display = ('course', 'student', 'comment', 'video_comment')
+
 
 # blogs.py
 @admin.register(Blog)
 class BlogModelAdmin(ModelAdmin):
-    list_display = ('title' , 'image' , 'is_published' , 'content')
+    list_display = ('title', 'image', 'is_published', 'content')
     list_filter = ('category', 'tags', 'is_published')
+
 
 @admin.register(Comment)
 class CommentModelAdmin(ModelAdmin):
     list_display = ('user', 'message', 'created_at')
     list_filter = ('user', 'created_at')
 
+
 @admin.register(Step)
 class StepModelAdmin(ModelAdmin):
     list_display = 'title',
 
+
 @admin.register(Leaderboard)
 class LeaderboardModelAdmin(ModelAdmin):
-    list_display = ('user' , 'rank' , 'points')
+    list_display = ('user', 'rank', 'points')
 
 
 admin.site.unregister(Group)

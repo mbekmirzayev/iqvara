@@ -8,7 +8,7 @@ from django_ckeditor_5.fields import CKEditor5Field
 from shared.models import SlugBaseModel, UUIDBaseModel, CreateBaseModel
 
 
-class Category(SlugBaseModel, UUIDBaseModel):
+class Category(SlugBaseModel):
     name = CharField(max_length=100, unique=True)
 
     class Meta:
@@ -23,7 +23,7 @@ class Category(SlugBaseModel, UUIDBaseModel):
         return self.courses.all()
 
 
-class   Course(SlugBaseModel, UUIDBaseModel):
+class Course(SlugBaseModel):
     category = ForeignKey('users.Category', CASCADE, related_name='courses')
     short_description = CharField(max_length=100, )
     full_description = CKEditor5Field()
@@ -34,8 +34,6 @@ class   Course(SlugBaseModel, UUIDBaseModel):
     price = DecimalField(max_digits=10, decimal_places=2)
     lesson_count = IntegerField(default=0)
     duration = DurationField()
-
-
 
     @property
     def instructor_images(self):
@@ -49,7 +47,7 @@ class   Course(SlugBaseModel, UUIDBaseModel):
         return self.title
 
 
-class CourseStep(UUIDBaseModel, SlugBaseModel):
+class CourseStep(UUIDBaseModel):
     course = ForeignKey('users.Course', CASCADE, related_name='course_steps')
     order_num = IntegerField()
     title = CharField(max_length=255, verbose_name=_("Course step title"))
@@ -60,24 +58,24 @@ class CourseStep(UUIDBaseModel, SlugBaseModel):
     class Meta:
         ordering = ['order_num']
 
-class Lesson(UUIDBaseModel, SlugBaseModel):
+
+class Lesson(UUIDBaseModel):
     class LessonStatus(TextChoices):
         PRIVATE = "private", _("Private")
         PUBLIC = "public", _("Public")
 
     step = ForeignKey('users.CourseStep', CASCADE, related_name='lessons')
-    title = CharField(max_length=100, )
+    title = CharField(max_length=100)
     video_url = URLField()
-    lesson_content = CKEditor5Field(blank=True, null=True)
+    lesson_content = CKEditor5Field(blank=True, null=True)  # ?
     duration = DurationField()
     lesson_status = CharField(choices=LessonStatus.choices, default=LessonStatus.PRIVATE)
-
 
     def __str__(self):
         return f"{self.title}, {self.step}"
 
 
-class Enrollment(UUIDBaseModel, CreateBaseModel):
+class Enrollment(CreateBaseModel):
     class Status(TextChoices):
         IN_PROGRESS = 'in_progress', _('In Progress')
         COMPLETED = 'completed', _('Completed')
@@ -87,7 +85,7 @@ class Enrollment(UUIDBaseModel, CreateBaseModel):
     status = CharField(max_length=20, choices=Status.choices, default=Status.IN_PROGRESS)
 
 
-class Review(UUIDBaseModel, CreateBaseModel):
+class Review(CreateBaseModel):
     student = ForeignKey('users.User', CASCADE, related_name='reviews')
     course = ForeignKey('users.Course', CASCADE)
     comment = TextField(null=True, blank=True)

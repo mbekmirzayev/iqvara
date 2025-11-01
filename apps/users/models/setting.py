@@ -1,7 +1,7 @@
 from django.db.models import Model, TextField, CharField, EmailField, FloatField
 from django_ckeditor_5.fields import CKEditor5Field
 
-from apps.shared.models import UUIDBaseModel, CreateBaseModel
+from apps.shared.models import CreateBaseModel
 
 
 class Setting(Model):
@@ -17,7 +17,7 @@ class Setting(Model):
         return f"Setting ({self.contact_email})"
 
 
-class FAQ(UUIDBaseModel, CreateBaseModel):
+class FAQ(CreateBaseModel):
     question = TextField()
     answer = TextField()
 

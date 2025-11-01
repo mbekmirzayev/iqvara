@@ -16,7 +16,7 @@ class UUIDBaseModel(Model):
         abstract = True
 
 
-class SlugBaseModel(Model):
+class SlugBaseModel(UUIDBaseModel):
     slug = SlugField(max_length=255, unique=True, db_index=True, editable=False)
 
     def save(self, *args, **kwargs):
@@ -35,7 +35,7 @@ class SlugBaseModel(Model):
         abstract = True
 
 
-class CreateBaseModel(Model):
+class CreateBaseModel(UUIDBaseModel):
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)
 

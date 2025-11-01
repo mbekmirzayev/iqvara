@@ -1,6 +1,4 @@
-import re
-from typing import Any
-
+from django.contrib.auth import get_user_model
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import IntegerField, HiddenField, CurrentUserDefault, CharField, EmailField
 from rest_framework.serializers import ModelSerializer, Serializer
@@ -9,11 +7,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from users.models import FAQ, Lesson, Review, Payment, User, Course, Category, Setting, Tag
 from users.models.blogs import Leaderboard, Comment, Step, Blog
 from users.models.courses import CourseStep, Enrollment
-from users.utils import  check_email
-
-from django.contrib.auth import get_user_model
+from users.utils import check_email
 
 User = get_user_model()
+
 
 class SafeUserSerializer(ModelSerializer):
     class Meta:
@@ -28,21 +25,25 @@ class SafeUserSerializer(ModelSerializer):
             "date_joined",
         ]
 
+
 # course.py
 class CategoryModelSerializer(ModelSerializer):
     class Meta:
         model = Category
         fields = "__all__"
 
+
 class LessonModelSerializer(ModelSerializer):
     class Meta:
         model = Lesson
         fields = "__all__"
 
+
 class ReViewModelSerializer(ModelSerializer):
     class Meta:
         model = Review
         fields = "__all__"
+
 
 class CourseModelSerializer(ModelSerializer):
     instructor = HiddenField(default=CurrentUserDefault())
@@ -56,21 +57,25 @@ class CourseModelSerializer(ModelSerializer):
         fields = ['student_count', 'instructor', 'price', 'category', 'image', 'title', 'lesson_count',
                   'lesson', 'review']
 
+
 class CourseStepModelSerializer(ModelSerializer):
     class Meta:
         model = CourseStep
         fields = '__all__'
+
 
 class ReviewModelSerializer(ModelSerializer):
     class Meta:
         model = Review
         fields = '__all__'
 
+
 # users.py
 class UserModelSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
+
 
 # payment.py
 class PaymentModelSerializer(ModelSerializer):
@@ -94,16 +99,19 @@ class PaymentModelSerializer(ModelSerializer):
             data["initial_payment_percent"] = None
         return data
 
+
 # setting.py (apps/users/setting.py)
 class FaqModelSerializer(ModelSerializer):
     class Meta:
         model = FAQ
         fields = "__all__"
 
+
 class SettingModelSerializer(ModelSerializer):
     class Meta:
         model = Setting
         fields = "__all__"
+
 
 # tags.py
 class TagModelSerializer(ModelSerializer):
@@ -111,26 +119,31 @@ class TagModelSerializer(ModelSerializer):
         model = Tag
         fields = "__all__"
 
+
 # blogs.py
 class BlogModelSerializer(ModelSerializer):
     class Meta:
         model = Blog
         fields = "__all__"
 
+
 class LeaderBoardModelSerializer(ModelSerializer):
     class Meta:
         model = Leaderboard
         fields = "__all__"
+
 
 class BlogCommentModelSerializer(ModelSerializer):
     class Meta:
         model = Comment
         fields = "__all__"
 
+
 class BlogStepModelSerializer(ModelSerializer):
     class Meta:
         model = Step
         fields = "__all__"
+
 
 class CommentSerializer(ModelSerializer):
     class Meta:
@@ -144,13 +157,11 @@ class EnrollmentModelSerializer(ModelSerializer):
         fields = "__all__"
 
 
-
-
 class RegisterSerializer(Serializer):
-    email = EmailField(max_length=50 , default='admin@gmail.com')
-    first_name = CharField(max_length=50 , default='Botir')
-    last_name = CharField(max_length=50 , default='Tohirov')
-    password = CharField(max_length=128, write_only=True , default='1')
+    email = EmailField(max_length=50, default='admin@gmail.com')
+    first_name = CharField(max_length=50, default='Botir')
+    last_name = CharField(max_length=50, default='Tohirov')
+    password = CharField(max_length=128, write_only=True, default='1')
 
 
 class VerifyCodeSerializer(Serializer):

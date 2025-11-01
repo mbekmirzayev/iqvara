@@ -3,10 +3,10 @@ from django.db.models import ImageField, ManyToManyField, CASCADE, ForeignKey, C
 from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.fields import CKEditor5Field
 
-from shared.models import UUIDBaseModel, SlugBaseModel, CreateBaseModel
+from shared.models import SlugBaseModel, CreateBaseModel
 
 
-class Blog(UUIDBaseModel, SlugBaseModel, CreateBaseModel):
+class Blog(SlugBaseModel, CreateBaseModel):
     content = CKEditor5Field()
     is_published = BooleanField(default=False)
     title = CharField(max_length=255)
@@ -24,10 +24,10 @@ class Blog(UUIDBaseModel, SlugBaseModel, CreateBaseModel):
 
     def publish(self):
         self.is_published = True
-        self.save()
+        self.save(update_fields=['is_published'])
 
 
-class Comment(UUIDBaseModel, CreateBaseModel):
+class Comment(CreateBaseModel):
     user = ForeignKey('users.User', CASCADE)
     message = CharField(max_length=100)
     blog = ForeignKey('users.Blog', CASCADE, related_name='comments')
@@ -41,7 +41,7 @@ class Comment(UUIDBaseModel, CreateBaseModel):
         return f"{self.user},{self.message[:20]}"
 
 
-class Step(UUIDBaseModel, CreateBaseModel):
+class Step(CreateBaseModel):
     title = CharField(max_length=255)
     content = TextField(null=True, blank=True)
     blog = ForeignKey('users.Blog', CASCADE, related_name='steps', )
@@ -50,7 +50,7 @@ class Step(UUIDBaseModel, CreateBaseModel):
         return f"{self.title}, {self.blog}"
 
 
-class Leaderboard(UUIDBaseModel, CreateBaseModel):
+class Leaderboard(CreateBaseModel):  # TODO ?
     courses = ManyToManyField('users.Course', related_name='leaderboards')
     user = ForeignKey('users.User', CASCADE, limit_choices_to={'role': 'student'}, related_name='leaderboards')
     points = IntegerField(default=0)
