@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.db.models import CharField, ImageField, EmailField, TextChoices
-from django.utils.translation import gettext_lazy as _  # to‘g‘risi shu
+from django.db.models import CharField, EmailField, ImageField, TextChoices
+from django.utils.translation import gettext_lazy as _
 
 from shared.models import UUIDBaseModel
 
@@ -30,14 +30,14 @@ class User(AbstractUser, UUIDBaseModel):
         INSTRUCTOR = 'instructor', _('Instructor')
         STUDENT = 'student', _('Student')
 
-    username = None  # 🔥 username fieldni olib tashladik
+    username = None
     email = EmailField(unique=True)
     role = CharField(max_length=20, choices=Status.choices, default=Status.STUDENT)
-    phone = CharField(max_length=20, blank=True, null=True)
+    phone = CharField(max_length=20, blank=True, )
     image = ImageField(upload_to='users/', null=True, blank=True)
 
-    USERNAME_FIELD = 'email'  # 🔥 email orqali login
-    REQUIRED_FIELDS = []  # superuser yaratishda boshqa fieldlar shart emas
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     objects = UserManager()
 

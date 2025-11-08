@@ -1,15 +1,36 @@
-from django.contrib.auth import get_user_model
 from rest_framework.exceptions import ValidationError
-from rest_framework.fields import IntegerField, HiddenField, CurrentUserDefault, CharField, EmailField
+from rest_framework.fields import (
+    CharField,
+    CurrentUserDefault,
+    EmailField,
+    HiddenField,
+    IntegerField,
+)
 from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from users.models import FAQ, Lesson, Review, Payment, User, Course, Category, Setting, Tag
-from users.models.blogs import Leaderboard, Comment, Step, Blog
-from users.models.courses import CourseStep, Enrollment
+from users.models import FAQ, Category, Course, Lesson, Payment, Review, Setting, Tag, User
+from users.models.blogs import Blog, Comment, Leaderboard, Step
+from users.models.courses import Section, Enrollment
 from users.utils import check_email
 
-User = get_user_model()
+from django.contrib.auth import authenticate
+from rest_framework import serializers
+from users.models import User  # Sendagi User modeli
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        user = authenticate(
+            email=data.get('email'),
+            password=data.get('password')
+        )
+        if not user:
+            raise serializers.ValidationError("Email yoki parol noto‘g‘ri")
+        data['user'] = user
+        return data
 
 
 class SafeUserSerializer(ModelSerializer):
@@ -24,7 +45,6 @@ class SafeUserSerializer(ModelSerializer):
             "role",
             "date_joined",
         ]
-
 
 # course.py
 class CategoryModelSerializer(ModelSerializer):
@@ -60,7 +80,7 @@ class CourseModelSerializer(ModelSerializer):
 
 class CourseStepModelSerializer(ModelSerializer):
     class Meta:
-        model = CourseStep
+        model = Section
         fields = '__all__'
 
 

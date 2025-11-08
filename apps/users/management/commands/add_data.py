@@ -1,11 +1,10 @@
 # apps/management/commands/generate_fake_data.py
 import random
+
 from django.core.management.base import BaseCommand
 from faker import Faker
 
-from apps.users.models import (
-    User, Course, Instructor, Category, Blog, AboutUs
-)
+from apps.users.models import AboutUs, Blog, Category, Course, Instructor, User
 
 
 class Command(BaseCommand):

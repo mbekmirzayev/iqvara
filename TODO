@@ -9,7 +9,7 @@ localhost:8000 drf
 | 2️⃣    | **Course**      | Kurslar haqidagi ma’lumot                                | ✅ API kerak (kurslar ro‘yxati, tafsilotlari)                | Instructor, admin (yaratadi); student (ko‘radi) | `IsInstructorOrAdmin` (create/update/delete), `AllowAny` (list/retrieve)  |
 | 3️⃣    | **Category**    | Kurs kategoriyalari                                      | ✅ API kerak (kategoriya ro‘yxati uchun)                     | Admin (yaratadi), barcha (ko‘radi)              | `AllowAny` (GET), `IsAdminUser` (POST/PUT/DELETE)                         |
 | 4️⃣    | **Lesson**      | Kursdagi darslar                                         | ✅ API kerak                                                 | Instructor, admin (yaratadi), student (ko‘radi) | `IsInstructorOrAdmin` (create/update), `IsEnrolledOrReadOnly` (GET uchun) |
-| 5️⃣    | **CourseStep**  | Dars bosqichlari (qadamlar)                              | ✅ API kerak                                                 | Instructor, admin                               | `IsInstructorOrAdmin`                                                     |
+| 5️⃣    | **Section**  | Dars bosqichlari (qadamlar)                              | ✅ API kerak                                                 | Instructor, admin                               | `IsInstructorOrAdmin`                                                     |
 | 6️⃣    | **Enrollment**  | Talabaning kursga yozilishi                              | ✅ API kerak (user kursga yoziladi, holat ko‘radi)           | Student, admin                                  | `IsStudentOrAdmin`                                                        |
 | 7️⃣    | **Review**      | Kursga berilgan baho va fikrlar                          | ✅ API kerak (kurslar sahifasida ko‘rsatish)                 | Student (yozadi), barcha (ko‘radi)              | `IsAuthenticatedOrReadOnly`                                               |
 | 8️⃣    | **Payment**     | To‘lov ma’lumotlari                                      | ✅ API kerak (student to‘lov qiladi)                         | Student, admin                                  | `IsOwnerOrAdmin`                                                          |
@@ -24,25 +24,18 @@ localhost:8000 drf
 
 
 
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYxOTIzMjg5LCJpYXQiOjE3NjE5MjI5ODksImp0aSI6IjlkNTNmNGIyODA4ZDRhNjBiZmExMjg4MDk4YWI5NjM4IiwidXNlcl9pZCI6IjMzYTg4YzIwLTEzMjEtNGUxYy1hNzdhLTRkNWE3ZGEwNzhiOCJ9.a08ciR58nGBJmS1BN0vrDWY0uAMfOJ1L-OCk_uYIH6o",
-  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2MjAwOTM4OSwiaWF0IjoxNzYxOTIyOTg5LCJqdGkiOiJmZjliMWE2ZjMzYTk0MGRhODZjYzUxNTQ3ZjViNTBhYSIsInVzZXJfaWQiOiIzM2E4OGMyMC0xMzIxLTRlMWMtYTc3YS00ZDVhN2RhMDc4YjgifQ.HPnvE5voB_VBu9mO9_vyYj2B7SMyc4GxyY2zjXUPY4k",
-  "id": "33a88c20-1321-4e1c-a77a-4d5a7da078b8",
-  "first_name": "Botir",
-  "last_name": "Tohirov",
-  "email": "admin@gmail.com"
-
 
 Task
-1. flake8, isort
-2. permissions ni togrilash
+1. flake8, isort ✅
+2. permissions ni togrilash ✅
 3. Blog.objects.filter(is_published=True)
 Blog.objects.all()
 Blog.objects.unpublished()
-QuerySet
+QuerySet ✅
 
-4. blog da korishlar soni, min read
+4. blog da korishlar soni, min read ✅
 5. drf knox (3ta device dan login qila olish)
 6. adminkadan lokatsiya kiritish
-7. paymentda mavjud kartalar modelini yozish
-8. promo code modelini yozish
+7. paymentda mavjud kartalar modelini yozish ✅
+8. promo code modelini yozish ✅
 9.

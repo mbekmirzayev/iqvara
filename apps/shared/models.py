@@ -1,5 +1,5 @@
-from django.db.models import Func, UUIDField, Model
-from django.db.models.fields import SlugField, DateTimeField
+from django.db.models import Func, Model, UUIDField
+from django.db.models.fields import DateTimeField, SlugField
 from django.utils.text import slugify
 
 

@@ -1,4 +1,4 @@
-from django.db.models import Model, TextField, CharField, EmailField, FloatField
+from django.db.models import CharField, EmailField, FloatField, Model, TextField
 from django_ckeditor_5.fields import CKEditor5Field
 
 from apps.shared.models import CreateBaseModel

@@ -1,6 +1,4 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
-
-from users.models import User
+from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 
 class IsAdminUser(BasePermission):
@@ -9,7 +7,7 @@ class IsAdminUser(BasePermission):
     """
 
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.role == User.Status.ADMIN
+        return request.user.is_authenticated and request.user.is_admin
 
 
 class IsInstructorOrAdmin(BasePermission):
@@ -30,7 +28,7 @@ class IsStudentOrAdmin(BasePermission):
     def has_permission(self, request, view):
         return (
                 request.user.is_authenticated and
-                (request.user.role in User.Status.STUDENT or request.user.role in User.Status.ADMIN)
+                (request.user.is_student or request.user.is_admin)
         )
 
 
@@ -49,7 +47,8 @@ class IsAuthenticatedOrReadOnly(BasePermission):
 class IsStudent(BasePermission):
     def has_permission(self, request, view):
         return (
-                request.user.is_authenticated and request.user.role in User.Status.STUDENT)
+                request.user.is_authenticated and request.user.is_student
+        )
 
 
 class IsOwnerOrAdmin(BasePermission):
@@ -59,10 +58,11 @@ class IsOwnerOrAdmin(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return (
-                request.user.is_authenticated and (
-                obj.user == request.user or
-                request.user.role == User.Status.ADMIN
-        )
+                request.user.is_authenticated and
+                (
+                        obj.user == request.user or
+                        request.user.is_admin
+                )
         )
 
 

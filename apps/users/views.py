@@ -2,21 +2,56 @@ import random
 
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema
+from knox.models import AuthToken
+from knox.views import LogoutAllView, LogoutView
 from rest_framework import status
-from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.generics import CreateAPIView, DestroyAPIView, ListAPIView, GenericAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from shared.permissions import IsInstructorOrAdmin, IsAdminUser, IsOwnerOrAdmin, IsStudentOrAdmin, IsStudent
-from users.models import FAQ, Category, Course, User, Payment, Blog, Lesson, CourseStep, Review, Enrollment, \
-    Leaderboard, Tag, Comment, Setting
-from users.serializers import UserModelSerializer, CategoryModelSerializer, CourseModelSerializer, FaqModelSerializer, \
-    PaymentModelSerializer, BlogModelSerializer, VerifyCodeSerializer, LessonModelSerializer, \
-    CourseStepModelSerializer, EnrollmentModelSerializer, LeaderBoardModelSerializer, TagModelSerializer, \
-    CommentSerializer, SettingModelSerializer, RegisterSerializer
+from shared.permissions import (
+    IsAdminUser,
+    IsInstructorOrAdmin,
+    IsOwnerOrAdmin,
+    IsStudent,
+    IsStudentOrAdmin,
+)
+from users.models import (
+    FAQ,
+    Blog,
+    Category,
+    Comment,
+    Course,
+    Section,
+    Enrollment,
+    Leaderboard,
+    Lesson,
+    Payment,
+    Review,
+    Setting,
+    Tag,
+    User,
+)
+from users.serializers import (
+    BlogModelSerializer,
+    CategoryModelSerializer,
+    CommentSerializer,
+    CourseModelSerializer,
+    CourseStepModelSerializer,
+    EnrollmentModelSerializer,
+    FaqModelSerializer,
+    LeaderBoardModelSerializer,
+    LessonModelSerializer,
+    PaymentModelSerializer,
+    RegisterSerializer,
+    SettingModelSerializer,
+    TagModelSerializer,
+    UserModelSerializer,
+    VerifyCodeSerializer, LoginSerializer,
+)
 from users.utils import send_code
 
 OTP_STORAGE = {}
@@ -109,7 +144,7 @@ class LessonViewSet(ModelViewSet):
 
 @extend_schema(tags=["Course "])
 class CourseStepListAPIView(ListAPIView):
-    queryset = CourseStep.objects.all()
+    queryset = Section.objects.all()
     serializer_class = CourseStepModelSerializer
     permission_classes = [AllowAny]
 
@@ -164,6 +199,8 @@ class FaqListAPIView(ListAPIView):
     queryset = FAQ.objects.all()
     serializer_class = FaqModelSerializer
     permission_classes = [AllowAny]
+
+    QuerySet = FAQ.objects.all()
 
 
 @extend_schema(tags=["Settings & FAQ"])
@@ -260,3 +297,31 @@ class UserProfileViewSet(ModelViewSet):
 
     def get_object(self):
         return self.request.user
+
+class CustomLoginView(GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+
+        # Tokenlarni tekshirish (maksimal 3)
+        tokens = AuthToken.objects.filter(user=user)
+        if tokens.count() >= 3:
+            # Eng eski tokenni o'chirish
+            tokens.order_by('created').first().delete()
+
+        # Yangi token yaratish
+        token_instance, token = AuthToken.objects.create(user)
+        return Response({
+            "user_id": user.id,
+            "email": user.email,
+            "token": token
+        }, status=status.HTTP_200_OK)
+
+class CustomLogoutView(LogoutView):
+    pass  # Hozirgi tokenni o'chiradi
+
+class CustomLogoutAllView(LogoutAllView):
+    pass  # Foydalanuvchining barcha tokenlarini o'chiradi

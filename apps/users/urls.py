@@ -1,14 +1,28 @@
-from django.urls import path, include
+from django.urls import include, path
+from knox import views as knox_views
 from rest_framework.routers import DefaultRouter
 
 from users.views import (
-    UserModelViewSet, UserListAPIView,
-    CategoryViewSet, CategoryListAPIView,
-    CourseModelViewSet, LessonViewSet, CourseStepListAPIView, ReviewViewSet,
-    EnrollmentCreateListAPIView, EnrollmentDestroyAPIView, PaymentCreateListAPIView,
-    LeaderBoardListAPIView, FaqListAPIView, TagListAPIView,
-    BlogModelViewSet, CommentCreateListAPIView,
-    VerifyCodeAPIView, SettingsListAPIView, RegisterAPIView, UserProfileViewSet
+    BlogModelViewSet,
+    CategoryListAPIView,
+    CategoryViewSet,
+    CommentCreateListAPIView,
+    CourseModelViewSet,
+    CourseStepListAPIView,
+    EnrollmentCreateListAPIView,
+    EnrollmentDestroyAPIView,
+    FaqListAPIView,
+    LeaderBoardListAPIView,
+    LessonViewSet,
+    PaymentCreateListAPIView,
+    RegisterAPIView,
+    ReviewViewSet,
+    SettingsListAPIView,
+    TagListAPIView,
+    UserListAPIView,
+    UserModelViewSet,
+    UserProfileViewSet,
+    VerifyCodeAPIView, CustomLoginView, CustomLogoutView, CustomLogoutAllView,
 )
 
 router = DefaultRouter()
@@ -21,7 +35,13 @@ router.register(r'reviews', ReviewViewSet, basename='reviews')
 router.register(r'blogs', BlogModelViewSet, basename='blogs')
 router.register(r'userprofile', UserProfileViewSet, basename='get-me')
 
+# urls.py
+
 urlpatterns = [
+    path('login/', CustomLoginView.as_view(), name='knox_login'),
+    path('logout/', CustomLogoutView.as_view(), name='knox_logout'),
+    path('logoutall/', CustomLogoutAllView.as_view(), name='knox_logoutall'),
+
     # ViewSet larni router orqali ulaymiz
     path('', include(router.urls)),
 

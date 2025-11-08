@@ -1,11 +1,19 @@
-from django.db.models import DecimalField, ForeignKey, CASCADE, CharField, TextField, ImageField, \
-    ManyToManyField, DurationField
+from django.db.models import (
+    CASCADE,
+    CharField,
+    DecimalField,
+    DurationField,
+    ForeignKey,
+    ImageField,
+    ManyToManyField,
+    TextField,
+)
 from django.db.models.enums import TextChoices
-from django.db.models.fields import URLField, IntegerField
+from django.db.models.fields import IntegerField, URLField
 from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.fields import CKEditor5Field
 
-from shared.models import SlugBaseModel, UUIDBaseModel, CreateBaseModel
+from shared.models import CreateBaseModel, SlugBaseModel, UUIDBaseModel
 
 
 class Category(SlugBaseModel):
@@ -47,8 +55,8 @@ class Course(SlugBaseModel):
         return self.title
 
 
-class CourseStep(UUIDBaseModel):
-    course = ForeignKey('users.Course', CASCADE, related_name='course_steps')
+class Section(UUIDBaseModel):
+    course = ForeignKey('users.Course', CASCADE, related_name='sections')
     order_num = IntegerField()
     title = CharField(max_length=255, verbose_name=_("Course step title"))
 
@@ -64,7 +72,7 @@ class Lesson(UUIDBaseModel):
         PRIVATE = "private", _("Private")
         PUBLIC = "public", _("Public")
 
-    step = ForeignKey('users.CourseStep', CASCADE, related_name='lessons')
+    step = ForeignKey('users.Section', CASCADE, related_name='lessons')
     title = CharField(max_length=100)
     video_url = URLField()
     lesson_content = CKEditor5Field(blank=True, null=True)  # ?
@@ -81,12 +89,12 @@ class Enrollment(CreateBaseModel):
         COMPLETED = 'completed', _('Completed')
 
     student = ForeignKey('users.User', CASCADE, limit_choices_to={'role': 'student'})
-    course = ForeignKey('users.Course', CASCADE, related_name='enrolments')
+    course = ForeignKey('users.Course', CASCADE, related_name='enrollments')
     status = CharField(max_length=20, choices=Status.choices, default=Status.IN_PROGRESS)
 
 
 class Review(CreateBaseModel):
     student = ForeignKey('users.User', CASCADE, related_name='reviews')
     course = ForeignKey('users.Course', CASCADE)
-    comment = TextField(null=True, blank=True)
-    video_comment = URLField(blank=True, null=True)
+    comment = TextField(blank=True)
+    video_comment = URLField(blank=True)

@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import Group
 
-from apps.users.models import Course, User, Category, Setting, Payment, Blog, Comment, Step
-from users.models import Tag, FAQ, Lesson, CourseStep, Enrollment, Review, Leaderboard
+from apps.users.models import Blog, Category, Comment, Course, Payment, Setting, Step, User
+from users.models import FAQ, Section, Enrollment, Leaderboard, Lesson, Review, Tag, Promocode
 
 
 # users.py
@@ -47,6 +47,10 @@ class PaymentModelAdmin(ModelAdmin):
     list_display = ('discount', 'course_name', 'course_price', 'payment_type', 'created_at')
     readonly_fields = ('created_at',)
 
+@admin.register(Promocode)
+class PromocodeModelAdmin(ModelAdmin):
+    list_display = ('title', 'amount', 'created_at' , 'expiry_date')
+
 
 # course.py
 @admin.register(Course)
@@ -77,8 +81,8 @@ class LessonModelAdmin(ModelAdmin):
     list_display = ('step', 'title', 'video_url', 'lesson_content', 'duration', 'lesson_status')
 
 
-@admin.register(CourseStep)
-class CourseStepModelAdmin(ModelAdmin):
+@admin.register(Section)
+class Section(ModelAdmin):
     list_display = ('course', 'order_num', 'title')
 
 

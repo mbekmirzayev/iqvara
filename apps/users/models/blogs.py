@@ -1,9 +1,35 @@
-from django.db.models import ImageField, ManyToManyField, CASCADE, ForeignKey, CharField, TextField, BooleanField, \
-    IntegerField, PositiveIntegerField, DateTimeField
+from django.db.models import (
+    CASCADE,
+    BooleanField,
+    CharField,
+    DateTimeField,
+    ForeignKey,
+    ImageField,
+    IntegerField,
+    Manager,
+    ManyToManyField,
+    PositiveIntegerField,
+    QuerySet,
+    TextField,
+)
 from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.fields import CKEditor5Field
 
-from shared.models import SlugBaseModel, CreateBaseModel
+from shared.models import CreateBaseModel, SlugBaseModel
+
+
+class BlogQuerySet(QuerySet):
+
+    def all(self):
+        return self.filter(is_published=True)
+
+    def unpublished(self):
+        return self.filter(is_published=False)
+
+
+class BlogManager(Manager):
+    def get_queryset(self):
+        return BlogQuerySet(self.model, using=self._db)
 
 
 class Blog(SlugBaseModel, CreateBaseModel):
@@ -13,6 +39,8 @@ class Blog(SlugBaseModel, CreateBaseModel):
     image = ImageField(upload_to="blogs/", null=True, blank=True)
     category = ManyToManyField('users.Category', related_name='blogs')
     tags = ManyToManyField('users.Tag', related_name='blogs', blank=True)
+    number_of_views = PositiveIntegerField(default=0)
+    read_time = PositiveIntegerField(default=0)
 
     class Meta:
         ordering = '-created_at',
@@ -43,7 +71,7 @@ class Comment(CreateBaseModel):
 
 class Step(CreateBaseModel):
     title = CharField(max_length=255)
-    content = TextField(null=True, blank=True)
+    content = TextField(blank=True)
     blog = ForeignKey('users.Blog', CASCADE, related_name='steps', )
 
     def __str__(self):

@@ -1,7 +1,7 @@
 from django.db.models import CharField
 from django.utils.translation import gettext_lazy as _
 
-from shared.models import SlugBaseModel, CreateBaseModel
+from shared.models import CreateBaseModel, SlugBaseModel
 
 
 class Tag(SlugBaseModel, CreateBaseModel):
