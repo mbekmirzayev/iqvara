@@ -158,10 +158,6 @@ SPECTACULAR_SETTINGS = {
 
 }
 
-
-if DEBUG:
-    INTERNAL_IPS += ['127.0.0.1']
-
 customColorPalette = [
     {
         'color': 'hsl(4, 90%, 58%)',
@@ -256,12 +252,6 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
-    }
-}
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
     "site_title": "Library Admin",

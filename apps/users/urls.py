@@ -46,7 +46,7 @@ urlpatterns = [
     path('', include(router.urls)),
 
     # ListAPIView yoki CreateAPIView lar
-    path('user-list', UserListAPIView.as_view(), name='user-list'),
+    path('users', UserListAPIView.as_view(), name='user-list'),
     path('categories', CategoryListAPIView.as_view(), name='category-list'),
 
     # Courses-related

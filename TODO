@@ -26,15 +26,16 @@ localhost:8000 drf
 
 
 Task
-1. flake8, isort ✅
-2. permissions ni togrilash ✅
+1. flake8, isort ✅ -
+2. permissions ni togrilash ✅ +
 3. Blog.objects.filter(is_published=True)
 Blog.objects.all()
 Blog.objects.unpublished()
-QuerySet ✅
+QuerySet ✅ +
 
-4. blog da korishlar soni, min read ✅
+4. blog da korishlar soni, min read ✅ +
 5. drf knox (3ta device dan login qila olish)
+5.1 devicelar apisini chiqarish
 6. adminkadan lokatsiya kiritish
 7. paymentda mavjud kartalar modelini yozish  ❌
 8. promo code modelini yozish ✅

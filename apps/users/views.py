@@ -298,6 +298,7 @@ class UserProfileViewSet(ModelViewSet):
     def get_object(self):
         return self.request.user
 
+
 class CustomLoginView(GenericAPIView):
     serializer_class = LoginSerializer
 
@@ -320,8 +321,10 @@ class CustomLoginView(GenericAPIView):
             "token": token
         }, status=status.HTTP_200_OK)
 
+
 class CustomLogoutView(LogoutView):
     pass  # Hozirgi tokenni o'chiradi
+
 
 class CustomLogoutAllView(LogoutAllView):
     pass  # Foydalanuvchining barcha tokenlarini o'chiradi
