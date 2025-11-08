@@ -36,6 +36,6 @@ QuerySet ✅
 4. blog da korishlar soni, min read ✅
 5. drf knox (3ta device dan login qila olish)
 6. adminkadan lokatsiya kiritish
-7. paymentda mavjud kartalar modelini yozish ✅
+7. paymentda mavjud kartalar modelini yozish  ❌
 8. promo code modelini yozish ✅
 9.
