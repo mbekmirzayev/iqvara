@@ -1,24 +1,29 @@
-# Logs
-logs
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtualenv
+.venv/
+venv/
+
+# Django
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+*.pot
+*.pyc
+*~
+db.sqlite3
+media/
+staticfiles/
 
-node_modules
-dist
-dist-ssr
-*.local
+# Migrations except __init__.py
+**/migrations/**
+!**/migrations/__init__.py
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# IDE
+.idea/
+.vscode/
+
+# Env
+.env
