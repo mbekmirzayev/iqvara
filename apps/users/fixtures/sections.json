@@ -1,32 +1,29 @@
 [
   {
-    "model": "users.coursestep",
+    "model": "users.section",
     "pk": "11111111-aaaa-4bbb-cccc-111111111111",
     "fields": {
       "title": "Step 1: Getting Started",
       "order_num": 1,
-      "course": "aaaaaaaa-bbbb-cccc-dddd-000000000001",
-      "slug": "step-1-getting-started"
+      "course": "bb12f8f1-12cd-4c9d-9e8b-b123d43190f1"
     }
   },
   {
-    "model": "users.coursestep",
+    "model": "users.section",
     "pk": "22222222-aaaa-4bbb-cccc-222222222222",
     "fields": {
       "title": "Step 2: Deep Dive",
       "order_num": 2,
-      "course": "aaaaaaaa-bbbb-cccc-dddd-000000000001",
-      "slug": "step-2-deep-dive"
+      "course": "cc92e7f4-bb7d-4ad1-9cd1-31c291b60d77"
     }
   },
   {
-    "model": "users.coursestep",
+    "model": "users.section",
     "pk": "33333333-aaaa-4bbb-cccc-333333333333",
     "fields": {
       "title": "Step 3: Final Project",
       "order_num": 3,
-      "course": "aaaaaaaa-bbbb-cccc-dddd-000000000001",
-      "slug": "step-3-final-project"
+      "course": "aa51a8a4-dc82-4baf-b0b5-76fef87e91e2"
     }
   }
 ]

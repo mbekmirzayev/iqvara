@@ -1,22 +1,79 @@
+import datetime
+import random
+from datetime import timedelta
+
 from django.core.cache import cache
-from rest_framework import status
+from django.utils import timezone
+from knox.models import AuthToken
 from rest_framework.exceptions import ValidationError
 
 
-def get_login_data(email: str):
-    return f"login:{email}"
+def create_user_token(user, max_tokens=3, device_name="default-device"):
+    """
+    Maksimal max_tokens token saqlash va yangi token yaratish
+    """
+    tokens = AuthToken.objects.filter(user=user)
+
+    # Agar tokenlar soni max_tokens dan katta bo'lsa, eng eski tokenni o'chirish
+    if tokens.count() >= max_tokens:
+        tokens.order_by('created').first().delete()
+
+    # Yangi token yaratish (expiry optional, masalan 10 kun)
+    token_instance, token = AuthToken.objects.create(
+        user=user,
+        device_name=device_name,
+        expiry=timedelta(days=10)
+    )
+    return token
 
 
-def send_code(email: str, code: int, expired_time=300):
-    print(f'Email: {email} == Code: {code}')
-    _email = get_login_data(email)
-    cache.set(_email, code, timeout=expired_time)
+def get_cache_key(email):
+    return f"verify_code:{email}"
 
 
-def check_email(email: str, code: int):
-    _email = get_login_data(email)
-    _code = cache.get(_email)
-    if _code is None:
-        raise ValidationError('Invalid or expired email code', status.HTTP_404_NOT_FOUND)
-    print(code, _code)
-    return _code == code
+def get_limit_key(email):
+    return f"verify_limit:{email}"
+
+
+def send_verification_code(email, expired_time=300):
+    """
+    Emailga code yuboradi va foydalanuvchi 5 daqiqa ichida faqat 1 marta so'rashi mumkin.
+    Agar so'rganda xato qaytaradi va qolgan sekundni bildiradi.
+    """
+    limit_key = get_limit_key(email)
+    last_sent = cache.get(limit_key)  # datetime object yoki None
+
+    if last_sent:
+        now = timezone.now()
+        remaining = int((last_sent + datetime.timedelta(seconds=expired_time) - now).total_seconds())
+        if remaining > 0:
+            raise ValidationError({"message": f"Please wait {remaining} seconds before requesting a new code"})
+
+    # Code yaratish
+    code = random.randint(100000, 999999)
+    code_key = get_cache_key(email)
+    cache.set(code_key, code, timeout=expired_time)
+
+    # Foydalanuvchiga yuborilgan vaqtni saqlash
+    cache.set(limit_key, timezone.now(), timeout=expired_time)
+
+    print(f"Verification code for {email}: {code}")  # testing
+    return code
+
+
+def check_verification_code(email, code):
+    code_key = get_cache_key(email)
+    cached = cache.get(code_key)
+    if cached is None:
+        return False
+    return cached == code
+
+def create_user_token(user, max_tokens=3):
+    tokens = AuthToken.objects.filter(user=user)
+    if tokens.count() >= max_tokens:
+        tokens.order_by('created').first().delete()
+    token_instance, token = AuthToken.objects.create(
+        user=user,
+        expiry=timedelta(days=10)
+    )
+    return token

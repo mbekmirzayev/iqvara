@@ -23,3 +23,9 @@ class FAQ(CreateBaseModel):
 
     def __str__(self):
         return f"FAQ ({self.question[:20]} , {self.answer[:20]})"
+
+
+class Device(CreateBaseModel):
+    device_id = CharField(max_length=255)
+
+

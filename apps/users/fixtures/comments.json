@@ -3,8 +3,8 @@
     "model": "users.comment",
     "pk": "ab15a3d2-913b-4b5d-a911-c0b88e0b2a14",
     "fields": {
-      "user": "e1c6fd57-2782-4f5c-8fbb-f50c6e8751c9",
-      "blog": "b41e1bca-7e12-4c11-a731-f9c3b0d2a1b3",
+      "user": "b7f12c64-4b4f-4b83-9c0f-2c6d6d1e4c01",
+      "blog": "a341bdc3-4b92-4569-b8a2-1e3c0b7c67d1",
       "message": "Ajoyib maqola, foydali ma'lumotlar bor.",
       "created_at": "2025-02-10T10:00:00Z",
       "updated_at": "2025-02-10T10:00:00Z"
@@ -14,8 +14,8 @@
     "model": "users.comment",
     "pk": "bc91e3a2-3f2c-431f-a1b3-d3a1c09a73d2",
     "fields": {
-      "user": "e2f3fa76-19a4-42f8-b2f2-9f4c4bb21ef2",
-      "blog": "c21a9f1e-4b11-4921-b8a2-d4f99a12a7d0",
+      "user": "a9c882e1-d4b3-4ac3-9831-9b8df68a3219",
+      "blog": "a351bdc3-4b92-4569-b8a2-1e3c0b7c67d1",
       "message": "Men bu darsni sinab ko‘rdim, ajoyib ishlaydi.",
       "created_at": "2025-02-11T10:00:00Z",
       "updated_at": "2025-02-11T10:00:00Z"
@@ -25,8 +25,8 @@
     "model": "users.comment",
     "pk": "d41e8b22-7191-421a-a812-f8123c3a91d3",
     "fields": {
-      "user": "e3b8c932-3194-4e2e-bd4a-3b5f82e7f00a",
-      "blog": "d88a11b3-422b-48c1-a992-10b8a9e2b001",
+      "user": "f43b1239-0020-43c0-b1f7-7b29b5ff233c",
+      "blog": "a341bdc3-4b92-4569-b8a2-1e3c0b7c67d1",
       "message": "Yangi boshlovchilar uchun juda qulay darslar.",
       "created_at": "2025-02-12T10:00:00Z",
       "updated_at": "2025-02-12T10:00:00Z"

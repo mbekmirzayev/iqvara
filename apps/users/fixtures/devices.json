@@ -1,0 +1,20 @@
+[
+  {
+    "model": "users.device",
+    "pk": "11111111-aaaa-4bbb-cccc-111111111111",
+    "fields": {
+      "device_id": "device-abc-123",
+      "created_at": "2025-11-16T08:00:00Z",
+      "updated_at": "2025-11-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "users.device",
+    "pk": "22222222-aaaa-4bbb-cccc-222222222222",
+    "fields": {
+      "device_id": "device-def-456",
+      "created_at": "2025-11-16T08:10:00Z",
+      "updated_at": "2025-11-16T08:10:00Z"
+    }
+  }
+]

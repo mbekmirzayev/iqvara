@@ -7,3 +7,13 @@ msg:
 
 compile_msg:
 	python3 manage.py compilemessages -i .venv
+
+loaddata:
+	python3 manage.py loaddata blogs categories steps comments users tags  courses sections lessons reviews settings faqs promocodes payments devices enrolments
+
+super:
+	python3 manage.py createsuperuser
+
+check:
+	flake8 .
+	isort .

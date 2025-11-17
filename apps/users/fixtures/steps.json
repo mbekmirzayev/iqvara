@@ -3,7 +3,7 @@
     "model": "users.step",
     "pk": "ab123ef4-5a22-4a11-88a3-d0b33e4a7a11",
     "fields": {
-      "blog": "b41e1bca-7e12-4c11-a731-f9c3b0d2a1b3",
+      "blog": "a351bdc3-4b92-4569-b8a2-1e3c0b7c67d1",
       "title": "Boshlang‘ich tayyorgarlik",
       "content": "Dastlabki tayyorlov darslari.",
       "created_at": "2025-02-01T09:00:00Z",
@@ -14,7 +14,7 @@
     "model": "users.step",
     "pk": "bc21a1e2-4123-421a-8123-d8b13f1c0012",
     "fields": {
-      "blog": "c21a9f1e-4b11-4921-b8a2-d4f99a12a7d0",
+      "blog": "a341bdc3-4b92-4569-b8a2-1e3c0b7c67d1",
       "title": "Asosiy mavzular",
       "content": "Python asoslari bilan tanishamiz.",
       "created_at": "2025-02-02T09:00:00Z",
@@ -25,7 +25,7 @@
     "model": "users.step",
     "pk": "d11a2b33-91a2-4321-b812-d81c2a312a9e",
     "fields": {
-      "blog": "d88a11b3-422b-48c1-a992-10b8a9e2b001",
+      "blog": "a341bdc3-4b92-4569-b8a2-1e3c0b7c67d1",
       "title": "Yakuniy loyiha",
       "content": "Real loyiha ustida ishlash.",
       "created_at": "2025-02-03T09:00:00Z",

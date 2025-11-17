@@ -3,12 +3,32 @@
     "model": "users.blog",
     "pk": "a341bdc3-4b92-4569-b8a2-1e3c0b7c67d1",
     "fields": {
+      "is_published": "True",
       "title": "Backend Development Trends 2025",
       "slug": "backend-development-trends-2025",
       "content": "In 2025, Python and Django remain dominant backend technologies...",
-      "author": "a9c882e1-d4b3-4ac3-9831-9b8df68a3219",
       "created_at": "2025-03-08T11:00:00Z",
-      "updated_at": "2025-03-09T09:45:00Z"
+      "updated_at": "2025-03-09T09:45:00Z" ,
+      "tags": ["b2c3d4e5-2233-4422-b323-e8b9b223c812"],
+      "number_of_views": "2424",
+      "read_time": "6"
+    }
+  },
+
+
+  {
+    "model": "users.blog",
+    "pk": "a351bdc3-4b92-4569-b8a2-1e3c0b7c67d1",
+    "fields": {
+      "is_published": "True",
+      "title": "Java java Trends 2025",
+      "slug": "java-java-trends-2025",
+      "content": "In 2025, java and java ...",
+      "created_at": "2024-03-08T11:00:00Z",
+      "updated_at": "2023-03-09T09:45:00Z" ,
+      "tags": ["c3d4e5f6-3344-4533-c434-f7a8c334d723"],
+      "number_of_views": "242",
+      "read_time": "3"
     }
   }
 ]

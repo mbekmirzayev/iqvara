@@ -6,8 +6,8 @@
       "title": "Lesson 1: Python Syntax",
       "video_url": "https://example.com/video1",
       "duration": "00:10:00",
-      "step": "11111111-aaaa-4bbb-cccc-111111111111",
-      "slug": "lesson-1-python-syntax"
+      "section": "11111111-aaaa-4bbb-cccc-111111111111",
+      "lesson_status": "private"
     }
   },
   {
@@ -17,8 +17,8 @@
       "title": "Lesson 2: Data Types",
       "video_url": "https://example.com/video2",
       "duration": "00:10:00",
-      "step": "22222222-aaaa-4bbb-cccc-222222222222",
-      "slug": "lesson-2-data-types"
+      "section": "22222222-aaaa-4bbb-cccc-222222222222",
+      "lesson_status": "private"
     }
   },
   {
@@ -28,8 +28,8 @@
       "title": "Lesson 3: Final Challenge",
       "video_url": "https://example.com/video3",
       "duration": "00:10:00",
-      "step": "33333333-aaaa-4bbb-cccc-333333333333",
-      "slug": "lesson-3-final-challenge"
+      "section": "33333333-aaaa-4bbb-cccc-333333333333",
+      "lesson_status": "private"
     }
   }
 ]

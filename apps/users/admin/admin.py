@@ -1,9 +1,10 @@
 from django.contrib import admin
-from django.contrib.admin import ModelAdmin
+from django.contrib.admin import ModelAdmin, TabularInline
 from django.contrib.auth.models import Group
 
 from apps.users.models import Blog, Category, Comment, Course, Payment, Setting, Step, User
-from users.models import FAQ, Section, Enrollment, Leaderboard, Lesson, Review, Tag, Promocode
+from users.models import FAQ, Section, Enrollment,  Lesson, Review, Tag, Promocode
+from users.models.setting import Device
 
 
 # users.py
@@ -40,6 +41,9 @@ class SettingsModelAdmin(ModelAdmin):
 class FAQModelAdmin(ModelAdmin):
     list_display = ('question', 'answer')
 
+@admin.register(Device)
+class DeviceModelAdmin(ModelAdmin):
+    list_display = ("device_id" , 'created_at' , 'updated_at')
 
 # payment.py
 @admin.register(Payment)
@@ -53,19 +57,6 @@ class PromocodeModelAdmin(ModelAdmin):
 
 
 # course.py
-@admin.register(Course)
-class CourseAdmin(ModelAdmin):
-    list_display = ('title', 'short_description', 'lesson_count', 'student_count', 'get_instructors')
-    search_fields = ('title',)
-    list_filter = ('title',)
-
-    @admin.display(description="Instructors")
-    def get_instructors(self, obj):
-        return ", ".join([i.full_name for i in obj.instructor.all()])
-
-    def student_count(self, obj):
-        return obj.students.count()
-
 
 @admin.register(Category)
 class CategoryAdmin(ModelAdmin):
@@ -77,9 +68,24 @@ class CategoryAdmin(ModelAdmin):
 
 
 @admin.register(Lesson)
-class LessonModelAdmin(ModelAdmin):
-    list_display = ('step', 'title', 'video_url', 'lesson_content', 'duration', 'lesson_status')
+class LessonModelAdmin(TabularInline):
+    model = Lesson
+    extra = 1
+    list_display = ('section', 'title', 'video_url', 'lesson_content', 'duration', 'lesson_status')
 
+@admin.register(Course)
+class CourseAdmin(ModelAdmin):
+    inlines = [LessonModelAdmin]
+    list_display = ('title', 'short_description', 'lesson_count', 'student_count', 'get_instructors')
+    search_fields = ('title',)
+    list_filter = ('title',)
+
+    @admin.display(description="Instructors")
+    def get_instructors(self, obj):
+        return ", ".join([i.full_name for i in obj.instructor.all()])
+
+    def student_count(self, obj):
+        return obj.students.count()
 
 @admin.register(Section)
 class Section(ModelAdmin):
@@ -113,10 +119,6 @@ class CommentModelAdmin(ModelAdmin):
 class StepModelAdmin(ModelAdmin):
     list_display = 'title',
 
-
-@admin.register(Leaderboard)
-class LeaderboardModelAdmin(ModelAdmin):
-    list_display = ('user', 'rank', 'points')
 
 
 admin.site.unregister(Group)

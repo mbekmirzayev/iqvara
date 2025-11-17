@@ -1,7 +1,7 @@
 [
   {
     "model": "users.setting",
-    "pk": "b11a9f22-4132-4c1a-b123-c1f9b213a901",
+    "pk": "4",
     "fields": {
       "longitude": 69.2401,
       "latitude": 41.2995,
@@ -9,39 +9,7 @@
       "phone": "+998901234567",
       "contact_email": "info@online.uz",
       "support_email": "support@online.uz",
-      "address": "Toshkent shahri, Yunusobod tumani",
-      "created_at": "2025-02-01T10:00:00Z",
-      "updated_at": "2025-02-01T10:00:00Z"
-    }
-  },
-  {
-    "model": "users.setting",
-    "pk": "b21a9c32-5122-4d1b-a9c3-d1f1a123e881",
-    "fields": {
-      "longitude": 69.2055,
-      "latitude": 41.3162,
-      "about_us": "<p>Dasturlashni o‘rganish uchun mukammal joy.</p>",
-      "phone": "+998909876543",
-      "contact_email": "contact@learn.uz",
-      "support_email": "help@learn.uz",
-      "address": "Chilonzor tumani, Toshkent",
-      "created_at": "2025-02-02T10:00:00Z",
-      "updated_at": "2025-02-02T10:00:00Z"
-    }
-  },
-  {
-    "model": "users.setting",
-    "pk": "b31a9d42-6222-4e1b-b2a3-f9f1a12b1991",
-    "fields": {
-      "longitude": 69.2112,
-      "latitude": 41.3120,
-      "about_us": "<p>O‘qituvchilar va talabalar uchun yagona tizim.</p>",
-      "phone": "+998971112233",
-      "contact_email": "edu@online.uz",
-      "support_email": "support@edu.uz",
-      "address": "Mirzo Ulug‘bek tumani, Toshkent",
-      "created_at": "2025-02-03T10:00:00Z",
-      "updated_at": "2025-02-03T10:00:00Z"
+      "address": "Toshkent shahri, Yunusobod tumani"
     }
   }
 ]

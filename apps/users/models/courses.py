@@ -58,7 +58,7 @@ class Course(SlugBaseModel):
 class Section(UUIDBaseModel):
     course = ForeignKey('users.Course', CASCADE, related_name='sections')
     order_num = IntegerField()
-    title = CharField(max_length=255, verbose_name=_("Course step title"))
+    title = CharField(max_length=255, verbose_name=_("Course section title"))
 
     def __str__(self):
         return self.title
@@ -72,7 +72,7 @@ class Lesson(UUIDBaseModel):
         PRIVATE = "private", _("Private")
         PUBLIC = "public", _("Public")
 
-    step = ForeignKey('users.Section', CASCADE, related_name='lessons')
+    section = ForeignKey('users.Section', CASCADE, related_name='lessons')
     title = CharField(max_length=100)
     video_url = URLField()
     lesson_content = CKEditor5Field(blank=True, null=True)  # ?
@@ -80,7 +80,7 @@ class Lesson(UUIDBaseModel):
     lesson_status = CharField(choices=LessonStatus.choices, default=LessonStatus.PRIVATE)
 
     def __str__(self):
-        return f"{self.title}, {self.step}"
+        return f"{self.title}, {self.section}"
 
 
 class Enrollment(CreateBaseModel):

@@ -14,8 +14,8 @@
     "model": "users.enrollment",
     "pk": "b9d5a0ef-4c91-45a4-a312-df82c6a1c123",
     "fields": {
-      "student": "e2f3fa76-19a4-42f8-b2f2-9f4c4bb21ef2",
-      "course": "ac44b9fa-8a29-4b23-b8a1-f129e3a0a118",
+      "student": "e1c6fd57-2782-4f5c-8fbb-f50c6e8751c9",
+      "course": "cc92e7f4-bb7d-4ad1-9cd1-31c291b60d77",
       "status": "completed",
       "created_at": "2025-02-06T08:00:00Z",
       "updated_at": "2025-02-06T08:00:00Z"
@@ -25,8 +25,8 @@
     "model": "users.enrollment",
     "pk": "c1f5d3e0-8b2c-47d4-9c9d-d4fef8b2d881",
     "fields": {
-      "student": "e3b8c932-3194-4e2e-bd4a-3b5f82e7f00a",
-      "course": "dd45f9e4-bb44-4e11-b8b9-f4ef1c123eaa",
+      "student": "e1c6fd57-2782-4f5c-8fbb-f50c6e8751c9",
+      "course": "aa51a8a4-dc82-4baf-b0b5-76fef87e91e2",
       "status": "in_progress",
       "created_at": "2025-02-07T08:00:00Z",
       "updated_at": "2025-02-07T08:00:00Z"

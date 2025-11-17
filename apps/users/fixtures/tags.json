@@ -14,7 +14,8 @@
     "fields": {
       "title": "Django",
       "slug": "django",
-      "created_at": "2025-02-02T09:00:00Z"
+      "created_at": "2025-02-02T09:00:00Z",
+       "updated_at": "2025-02-01T09:00:00Z"
     }
   },
   {
@@ -23,7 +24,8 @@
     "fields": {
       "title": "REST API",
       "slug": "rest-api",
-      "created_at": "2025-02-03T09:00:00Z"
+      "created_at": "2025-02-03T09:00:00Z",
+       "updated_at": "2025-02-01T09:00:00Z"
     }
   }
 ]

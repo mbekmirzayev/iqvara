@@ -1,26 +1,25 @@
+from django.contrib.auth import authenticate
+from knox.models import AuthToken
+from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import (
-    CharField,
     CurrentUserDefault,
     EmailField,
     HiddenField,
-    IntegerField,
+    IntegerField, CharField,
 )
+from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer, Serializer
-from rest_framework_simplejwt.tokens import RefreshToken
 
-from users.models import FAQ, Category, Course, Lesson, Payment, Review, Setting, Tag, User
-from users.models.blogs import Blog, Comment, Leaderboard, Step
+from users.models import FAQ, Category, Course, Lesson, Payment, Review, Setting, Tag
+from users.models import User
+from users.models.blogs import Blog, Comment,  Step
 from users.models.courses import Section, Enrollment
-from users.utils import check_email
 
-from django.contrib.auth import authenticate
-from rest_framework import serializers
-from users.models import User  # Sendagi User modeli
 
-class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField(write_only=True)
+class LoginSerializer(Serializer):
+    email = EmailField()
+    password = CharField(write_only=True)
 
     def validate(self, data):
         user = authenticate(
@@ -28,7 +27,7 @@ class LoginSerializer(serializers.Serializer):
             password=data.get('password')
         )
         if not user:
-            raise serializers.ValidationError("Email yoki parol noto‘g‘ri")
+            raise ValidationError("Email yoki parol noto‘g‘ri")
         data['user'] = user
         return data
 
@@ -46,18 +45,34 @@ class SafeUserSerializer(ModelSerializer):
             "date_joined",
         ]
 
+
 # course.py
 class CategoryModelSerializer(ModelSerializer):
     class Meta:
         model = Category
-        fields = "__all__"
+        fields = ['id', 'name']
+
+class CourseModelSerializer(ModelSerializer):
+    category = CategoryModelSerializer(read_only=True)
+
+    class Meta:
+        model = Course
+        fields = [ 'title' , 'price', 'category' , 'lesson_count' , 'image']
+
+
+class CourseSectionModelSerializer(ModelSerializer):
+    course = CourseModelSerializer(read_only=True)
+
+    class Meta:
+        model = Section
+        fields = ['id', 'title', 'order_num', 'course']
 
 
 class LessonModelSerializer(ModelSerializer):
+    section = CourseSectionModelSerializer(read_only=True)
     class Meta:
         model = Lesson
-        fields = "__all__"
-
+        fields = ["id", "title", "video_url", "duration", "lesson_status", "section"]
 
 class ReViewModelSerializer(ModelSerializer):
     class Meta:
@@ -65,29 +80,10 @@ class ReViewModelSerializer(ModelSerializer):
         fields = "__all__"
 
 
-class CourseModelSerializer(ModelSerializer):
-    instructor = HiddenField(default=CurrentUserDefault())
-    student_count = IntegerField(read_only=True)
-    lesson_count = IntegerField(read_only=True)
-    lesson = LessonModelSerializer(read_only=True, many=True)
-    review = ReViewModelSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Course
-        fields = ['student_count', 'instructor', 'price', 'category', 'image', 'title', 'lesson_count',
-                  'lesson', 'review']
-
-
-class CourseStepModelSerializer(ModelSerializer):
-    class Meta:
-        model = Section
-        fields = '__all__'
-
-
 class ReviewModelSerializer(ModelSerializer):
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = ['id', 'student', 'course', 'comment', 'video_comment']
 
 
 # users.py
@@ -96,6 +92,10 @@ class UserModelSerializer(ModelSerializer):
         model = User
         fields = "__all__"
 
+class MinimalUserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "role", "image"]
 
 # payment.py
 class PaymentModelSerializer(ModelSerializer):
@@ -124,7 +124,7 @@ class PaymentModelSerializer(ModelSerializer):
 class FaqModelSerializer(ModelSerializer):
     class Meta:
         model = FAQ
-        fields = "__all__"
+        fields = ['id' , 'question' , 'answer']
 
 
 class SettingModelSerializer(ModelSerializer):
@@ -137,20 +137,17 @@ class SettingModelSerializer(ModelSerializer):
 class TagModelSerializer(ModelSerializer):
     class Meta:
         model = Tag
-        fields = "__all__"
+        fields = ['id' , 'slug' , 'title' , 'created_at' , 'updated_at']
 
 
 # blogs.py
 class BlogModelSerializer(ModelSerializer):
+    tags = TagModelSerializer(many=True , read_only=True)
     class Meta:
         model = Blog
-        fields = "__all__"
+        fields = ['id', 'title', 'image', 'tags']
 
 
-class LeaderBoardModelSerializer(ModelSerializer):
-    class Meta:
-        model = Leaderboard
-        fields = "__all__"
 
 
 class BlogCommentModelSerializer(ModelSerializer):
@@ -164,57 +161,64 @@ class BlogStepModelSerializer(ModelSerializer):
         model = Step
         fields = "__all__"
 
+class MinimalBlogSerializer(ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = ["id", "title"]
 
-class CommentSerializer(ModelSerializer):
+class CommentNestedSerializer(ModelSerializer):
+    user = MinimalUserSerializer(read_only=True)
+    blog = MinimalBlogSerializer(read_only=True)
     class Meta:
         model = Comment
-        fields = "__all__"
+        fields = ['id' , 'created_at' , 'updated_at' , 'message' ,  'user' , 'blog']
 
+class CommentCreateSerializer(ModelSerializer):
+    user = HiddenField(default=CurrentUserDefault())
+    blog = PrimaryKeyRelatedField(queryset=Blog.objects.all())
+
+    class Meta:
+        model = Comment
+        fields = ["id", "message", "user", "blog"]
 
 class EnrollmentModelSerializer(ModelSerializer):
+    course = CourseModelSerializer(read_only=True)
     class Meta:
         model = Enrollment
-        fields = "__all__"
-
+        fields = ['id', 'student_id' , 'created_at', 'updated_at', 'status' , 'course']
 
 class RegisterSerializer(Serializer):
-    email = EmailField(max_length=50, default='admin@gmail.com')
-    first_name = CharField(max_length=50, default='Botir')
-    last_name = CharField(max_length=50, default='Tohirov')
-    password = CharField(max_length=128, write_only=True, default='1')
+    email = EmailField(default="BotirBotirov@gmail.com")
+    first_name = CharField(max_length=50 , default="Botir")
+    last_name = CharField(max_length=50 , default="Botirov")
+    password = CharField(write_only=True , default="1")
 
-
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise ValidationError("Email already registered")
+        return value
 class VerifyCodeSerializer(Serializer):
-    email = EmailField(default='admin@gmail.com')
+    email = EmailField(default="BotirBotirov@gmail.com")
     code = IntegerField()
-    token_class = RefreshToken
+    first_name = CharField(max_length=50, write_only=True , default="Botir")
+    last_name = CharField(max_length=50, write_only=True , default="Botirov")
+    password = CharField(write_only=True , default="1")
 
-    default_error_messages = {
-        "no_active_account": "No active account found with the given credentials"
-    }
 
-    def get_data(self):
-        refresh = self.get_token(self.user)
-        user_data = UserModelSerializer(self.user).data
-        tokens = {
-            'access_token': str(refresh.access_token),
-            'refresh_token': str(refresh)
-        }
-        data = {**tokens, **user_data}
-        return data
+class LoginSerializer(Serializer):
+    email = EmailField(default="BotirBotirov@gmail.com")
+    password = CharField(write_only=True , default="1")
 
     def validate(self, attrs):
         email = attrs['email']
-        code = attrs['code']
+        password = attrs['password']
 
-        is_valid = check_email(email, code)
-        if not is_valid:
-            raise ValidationError({'message': 'Invalid or expired code'})
+        user = authenticate(email=email, password=password)
+        if not user:
+            raise ValidationError("Invalid email or password")
+        if not user.is_active:
+            raise ValidationError("Account is not verified")
 
-        self.user, _ = User.objects.get_or_create(email=email)
-        attrs['user'] = self.user
+        attrs['user'] = user
         return attrs
 
-    @classmethod
-    def get_token(cls, user):
-        return cls.token_class.for_user(user)

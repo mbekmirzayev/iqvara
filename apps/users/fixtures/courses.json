@@ -8,7 +8,8 @@
       "short_description": "Learn Python from scratch.",
       "full_description": "Learn Pyosihdivbiljvew9gvybia;nknssbvehawb;.",
       "price": 1200000,
-      "duration": 40,
+      "duration": "19:00:00",
+       "lesson_count": 6,
       "category": "c201a1f3-12b4-4cde-b101-003d7fdd4af1"
     }
   },
@@ -19,9 +20,10 @@
       "title": "UI/UX Design Basics",
       "slug": "ui-ux-design-basics",
       "short_description": "Learn modern design principles.",
-      "full_description": "asiytulibn;ofhweugiubnfasbdiytfiyuleibw;ano.",
+      "full_description": "asiytulibn;ofhweugiubnfasbdiytfibw;ano.",
       "price": 950000,
-      "duration": 40,
+      "duration": "52:00:00",
+      "lesson_count": 4,
       "category": "d34b8a2a-fc91-4e3d-8f7a-47e73f7996d9"
     }
   },
@@ -34,7 +36,8 @@
       "short_description": "Boost your marketing skills.",
       "full_description": "asiytulibn;ofhweugiubnfasbdiytfiyuleibw;ano.",
       "price": 880000,
-      "duration": 40,
+      "duration": "12:33:00",
+       "lesson_count": 32,
       "category": "a6df9b1c-33c2-4c0f-b4c0-cb517a5b924b"
     }
   }

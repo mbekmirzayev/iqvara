@@ -4,8 +4,7 @@
     "pk": "b1113f83-fb8c-41f9-b7c2-1a8a6b97b112",
     "fields": {
       "course": "bb12f8f1-12cd-4c9d-9e8b-b123d43190f1",
-      "user": "e1c6fd57-2782-4f5c-8fbb-f50c6e8751c9",
-      "rating": 5,
+      "student": "e1c6fd57-2782-4f5c-8fbb-f50c6e8751c9",
       "comment": "Judayam foydali kurs!",
       "created_at": "2025-03-06T09:00:00Z",
       "updated_at": "2025-03-07T09:30:00Z"
