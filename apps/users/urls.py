@@ -1,14 +1,18 @@
 from django.urls import include, path
-from knox import views as knox_views
 from rest_framework.routers import DefaultRouter
 
 from users.views import (
     BlogModelViewSet,
     CategoryListAPIView,
     CategoryViewSet,
+    CommentCreateAPIView,
     CommentListAPIView,
+    CommentRetrieveUpdateDestroyAPIView,
     CourseModelViewSet,
     CourseStepListAPIView,
+    CustomLoginAPIView,
+    CustomLogoutAllView,
+    CustomLogoutView,
     EnrollmentCreateListAPIView,
     EnrollmentDestroyAPIView,
     FaqListAPIView,
@@ -21,8 +25,7 @@ from users.views import (
     UserListAPIView,
     UserModelViewSet,
     UserProfileViewSet,
-    VerifyCodeAPIView, CustomLogoutView, CustomLogoutAllView, CustomLoginAPIView, CommentRetrieveUpdateDestroyAPIView,
-    CommentCreateAPIView,
+    VerifyCodeAPIView,
 )
 
 router = DefaultRouter()

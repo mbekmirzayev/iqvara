@@ -41,30 +41,23 @@ def get_app_list(self, request, app_label=None):
         },
     }
 
-
     model_order = {
         'User': 'label1',
-
         'Blog': 'label2',
         'Comment': 'label2',
         'Step': 'label2',
         'Leaderboard': 'label2',
-
         'Category': 'label3',
         'Course': 'label3',
         'Section': 'label3',
         'Lesson': 'label3',
         'Enrollment': 'label3',
         'Review': 'label3',
-
         'Setting': 'label4',
         'FAQ': 'label4',
         'Tag': 'label4',
-
         'Payment': 'label5',
         'Promo': 'label5',
-
-
     }
     for _model in all_models:
         if _model['object_name'] in model_order.keys():

@@ -1,35 +1,18 @@
 from django.contrib.auth import authenticate
-from knox.models import AuthToken
-from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import (
+    CharField,
     CurrentUserDefault,
     EmailField,
     HiddenField,
-    IntegerField, CharField,
+    IntegerField,
 )
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer, Serializer
 
-from users.models import FAQ, Category, Course, Lesson, Payment, Review, Setting, Tag
-from users.models import User
-from users.models.blogs import Blog, Comment,  Step
-from users.models.courses import Section, Enrollment
-
-
-class LoginSerializer(Serializer):
-    email = EmailField()
-    password = CharField(write_only=True)
-
-    def validate(self, data):
-        user = authenticate(
-            email=data.get('email'),
-            password=data.get('password')
-        )
-        if not user:
-            raise ValidationError("Email yoki parol noto‘g‘ri")
-        data['user'] = user
-        return data
+from users.models import FAQ, Category, Course, Lesson, Payment, Review, Setting, Tag, User
+from users.models.blogs import Blog, Comment, Step
+from users.models.courses import Enrollment, Section
 
 
 class SafeUserSerializer(ModelSerializer):
@@ -52,12 +35,13 @@ class CategoryModelSerializer(ModelSerializer):
         model = Category
         fields = ['id', 'name']
 
+
 class CourseModelSerializer(ModelSerializer):
     category = CategoryModelSerializer(read_only=True)
 
     class Meta:
         model = Course
-        fields = [ 'title' , 'price', 'category' , 'lesson_count' , 'image']
+        fields = ['title', 'price', 'category', 'lesson_count', 'image']
 
 
 class CourseSectionModelSerializer(ModelSerializer):
@@ -70,9 +54,11 @@ class CourseSectionModelSerializer(ModelSerializer):
 
 class LessonModelSerializer(ModelSerializer):
     section = CourseSectionModelSerializer(read_only=True)
+
     class Meta:
         model = Lesson
         fields = ["id", "title", "video_url", "duration", "lesson_status", "section"]
+
 
 class ReViewModelSerializer(ModelSerializer):
     class Meta:
@@ -92,10 +78,12 @@ class UserModelSerializer(ModelSerializer):
         model = User
         fields = "__all__"
 
+
 class MinimalUserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "role", "image"]
+
 
 # payment.py
 class PaymentModelSerializer(ModelSerializer):
@@ -124,7 +112,7 @@ class PaymentModelSerializer(ModelSerializer):
 class FaqModelSerializer(ModelSerializer):
     class Meta:
         model = FAQ
-        fields = ['id' , 'question' , 'answer']
+        fields = ['id', 'question', 'answer']
 
 
 class SettingModelSerializer(ModelSerializer):
@@ -137,17 +125,16 @@ class SettingModelSerializer(ModelSerializer):
 class TagModelSerializer(ModelSerializer):
     class Meta:
         model = Tag
-        fields = ['id' , 'slug' , 'title' , 'created_at' , 'updated_at']
+        fields = ['id', 'slug', 'title', 'created_at', 'updated_at']
 
 
 # blogs.py
 class BlogModelSerializer(ModelSerializer):
-    tags = TagModelSerializer(many=True , read_only=True)
+    tags = TagModelSerializer(many=True, read_only=True)
+
     class Meta:
         model = Blog
         fields = ['id', 'title', 'image', 'tags']
-
-
 
 
 class BlogCommentModelSerializer(ModelSerializer):
@@ -161,17 +148,21 @@ class BlogStepModelSerializer(ModelSerializer):
         model = Step
         fields = "__all__"
 
+
 class MinimalBlogSerializer(ModelSerializer):
     class Meta:
         model = Blog
         fields = ["id", "title"]
 
+
 class CommentNestedSerializer(ModelSerializer):
     user = MinimalUserSerializer(read_only=True)
     blog = MinimalBlogSerializer(read_only=True)
+
     class Meta:
         model = Comment
-        fields = ['id' , 'created_at' , 'updated_at' , 'message' ,  'user' , 'blog']
+        fields = ['id', 'created_at', 'updated_at', 'message', 'user', 'blog']
+
 
 class CommentCreateSerializer(ModelSerializer):
     user = HiddenField(default=CurrentUserDefault())
@@ -181,33 +172,38 @@ class CommentCreateSerializer(ModelSerializer):
         model = Comment
         fields = ["id", "message", "user", "blog"]
 
+
 class EnrollmentModelSerializer(ModelSerializer):
     course = CourseModelSerializer(read_only=True)
+
     class Meta:
         model = Enrollment
-        fields = ['id', 'student_id' , 'created_at', 'updated_at', 'status' , 'course']
+        fields = ['id', 'student_id', 'created_at', 'updated_at', 'status', 'course']
+
 
 class RegisterSerializer(Serializer):
     email = EmailField(default="BotirBotirov@gmail.com")
-    first_name = CharField(max_length=50 , default="Botir")
-    last_name = CharField(max_length=50 , default="Botirov")
-    password = CharField(write_only=True , default="1")
+    first_name = CharField(max_length=50, default="Botir")
+    last_name = CharField(max_length=50, default="Botirov")
+    password = CharField(write_only=True, default="1")
 
     def validate_email(self, value):
         if User.objects.filter(email=value).exists():
             raise ValidationError("Email already registered")
         return value
+
+
 class VerifyCodeSerializer(Serializer):
     email = EmailField(default="BotirBotirov@gmail.com")
     code = IntegerField()
-    first_name = CharField(max_length=50, write_only=True , default="Botir")
-    last_name = CharField(max_length=50, write_only=True , default="Botirov")
-    password = CharField(write_only=True , default="1")
+    first_name = CharField(max_length=50, write_only=True, default="Botir")
+    last_name = CharField(max_length=50, write_only=True, default="Botirov")
+    password = CharField(write_only=True, default="1")
 
 
 class LoginSerializer(Serializer):
     email = EmailField(default="BotirBotirov@gmail.com")
-    password = CharField(write_only=True , default="1")
+    password = CharField(write_only=True, default="1")
 
     def validate(self, attrs):
         email = attrs['email']
@@ -221,4 +217,3 @@ class LoginSerializer(Serializer):
 
         attrs['user'] = user
         return attrs
-

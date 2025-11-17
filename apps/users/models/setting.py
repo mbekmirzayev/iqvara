@@ -28,4 +28,5 @@ class FAQ(CreateBaseModel):
 class Device(CreateBaseModel):
     device_id = CharField(max_length=255)
 
-
+    def __str__(self):
+        return f"Device ({self.device_id})"

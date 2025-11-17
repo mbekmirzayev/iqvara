@@ -2,10 +2,8 @@ from django.db.models import (
     CASCADE,
     BooleanField,
     CharField,
-    DateTimeField,
     ForeignKey,
     ImageField,
-    IntegerField,
     Manager,
     ManyToManyField,
     PositiveIntegerField,
@@ -76,4 +74,3 @@ class Step(CreateBaseModel):
 
     def __str__(self):
         return f"{self.title}, {self.blog}"
-

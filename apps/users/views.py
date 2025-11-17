@@ -3,7 +3,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema
 from knox.views import LogoutAllView, LogoutView
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, DestroyAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    DestroyAPIView,
+    ListAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -22,11 +27,11 @@ from users.models import (
     Category,
     Comment,
     Course,
-    Section,
     Enrollment,
     Lesson,
     Payment,
     Review,
+    Section,
     Setting,
     Tag,
     User,
@@ -34,20 +39,22 @@ from users.models import (
 from users.serializers import (
     BlogModelSerializer,
     CategoryModelSerializer,
+    CommentCreateSerializer,
     CommentNestedSerializer,
     CourseModelSerializer,
     CourseSectionModelSerializer,
     EnrollmentModelSerializer,
     FaqModelSerializer,
     LessonModelSerializer,
+    LoginSerializer,
     PaymentModelSerializer,
     RegisterSerializer,
     SettingModelSerializer,
     TagModelSerializer,
     UserModelSerializer,
-    VerifyCodeSerializer, LoginSerializer, CommentCreateSerializer,
+    VerifyCodeSerializer,
 )
-from users.utils import send_verification_code, check_verification_code, create_user_token
+from users.utils import check_verification_code, create_user_token, send_verification_code
 
 OTP_STORAGE = {}
 
@@ -215,17 +222,20 @@ class BlogModelViewSet(ModelViewSet):
             return [IsAuthenticated(), IsInstructorOrAdmin()]
         return [AllowAny(), ]
 
+
 @extend_schema(tags=["Comments"])
 class CommentListAPIView(ListAPIView):
     queryset = Comment.objects.select_related('user', 'blog').all()
     serializer_class = CommentNestedSerializer
     permission_classes = [IsAuthenticated]
 
+
 @extend_schema(tags=["Comments"])
 class CommentCreateAPIView(CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentCreateSerializer
     permission_classes = [IsAuthenticated]
+
 
 @extend_schema(tags=["Comments"])
 class CommentRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):

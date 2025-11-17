@@ -1,7 +1,7 @@
 from users.models.blogs import Blog, Comment, Step
-from users.models.courses import Category, Course, Section, Enrollment, Lesson, Review
+from users.models.courses import Category, Course, Enrollment, Lesson, Review, Section
 from users.models.payment import Payment, Promocode
-from users.models.setting import FAQ, Setting , Device
+from users.models.setting import FAQ, Device, Setting
 from users.models.tags import Tag
 from users.models.users import User
 

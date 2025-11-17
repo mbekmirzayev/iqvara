@@ -1,9 +1,9 @@
 from django.contrib import admin
-from django.contrib.admin import ModelAdmin, TabularInline
+from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import Group
 
 from apps.users.models import Blog, Category, Comment, Course, Payment, Setting, Step, User
-from users.models import FAQ, Section, Enrollment,  Lesson, Review, Tag, Promocode
+from users.models import FAQ, Enrollment, Lesson, Promocode, Review, Section, Tag
 from users.models.setting import Device
 
 
@@ -41,9 +41,11 @@ class SettingsModelAdmin(ModelAdmin):
 class FAQModelAdmin(ModelAdmin):
     list_display = ('question', 'answer')
 
+
 @admin.register(Device)
 class DeviceModelAdmin(ModelAdmin):
-    list_display = ("device_id" , 'created_at' , 'updated_at')
+    list_display = ("device_id", 'created_at', 'updated_at')
+
 
 # payment.py
 @admin.register(Payment)
@@ -51,9 +53,10 @@ class PaymentModelAdmin(ModelAdmin):
     list_display = ('discount', 'course_name', 'course_price', 'payment_type', 'created_at')
     readonly_fields = ('created_at',)
 
+
 @admin.register(Promocode)
 class PromocodeModelAdmin(ModelAdmin):
-    list_display = ('title', 'amount', 'created_at' , 'expiry_date')
+    list_display = ('title', 'amount', 'created_at', 'expiry_date')
 
 
 # course.py
@@ -91,6 +94,7 @@ class LessonModelAdmin(ModelAdmin):
     def student_count(self, obj):
         return obj.students.count()
 
+
 @admin.register(Section)
 class Section(ModelAdmin):
     list_display = ('course', 'order_num', 'title')
@@ -122,7 +126,6 @@ class CommentModelAdmin(ModelAdmin):
 @admin.register(Step)
 class StepModelAdmin(ModelAdmin):
     list_display = 'title',
-
 
 
 admin.site.unregister(Group)
