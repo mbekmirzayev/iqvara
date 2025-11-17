@@ -57,6 +57,19 @@ class PromocodeModelAdmin(ModelAdmin):
 
 
 # course.py
+@admin.register(Course)
+class CourseAdmin(ModelAdmin):
+    list_display = ('title', 'short_description', 'lesson_count', 'student_count', 'get_instructors')
+    search_fields = ('title',)
+    list_filter = ('title',)
+
+    @admin.display(description="Instructors")
+    def get_instructors(self, obj):
+        return ", ".join([i.full_name for i in obj.instructor.all()])
+
+    def student_count(self, obj):
+        return obj.students.count()
+
 
 @admin.register(Category)
 class CategoryAdmin(ModelAdmin):
@@ -68,17 +81,8 @@ class CategoryAdmin(ModelAdmin):
 
 
 @admin.register(Lesson)
-class LessonModelAdmin(TabularInline):
-    model = Lesson
-    extra = 1
+class LessonModelAdmin(ModelAdmin):
     list_display = ('section', 'title', 'video_url', 'lesson_content', 'duration', 'lesson_status')
-
-@admin.register(Course)
-class CourseAdmin(ModelAdmin):
-    inlines = [LessonModelAdmin]
-    list_display = ('title', 'short_description', 'lesson_count', 'student_count', 'get_instructors')
-    search_fields = ('title',)
-    list_filter = ('title',)
 
     @admin.display(description="Instructors")
     def get_instructors(self, obj):
