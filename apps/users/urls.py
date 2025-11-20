@@ -5,13 +5,10 @@ from users.views import (
     BlogModelViewSet,
     CategoryListAPIView,
     CategoryViewSet,
-    CommentCreateAPIView,
-    CommentListAPIView,
+    CommentListCreateAPIView,
     CommentRetrieveUpdateDestroyAPIView,
     CourseModelViewSet,
-    CourseStepListAPIView,
     CustomLoginAPIView,
-    CustomLogoutAllView,
     CustomLogoutView,
     EnrollmentCreateListAPIView,
     EnrollmentDestroyAPIView,
@@ -43,7 +40,6 @@ router.register(r'userprofile', UserProfileViewSet, basename='get_me')
 urlpatterns = [
     path('login', CustomLoginAPIView.as_view(), name='knox_login'),
     path('logout', CustomLogoutView.as_view(), name='knox_logout'),
-    path('logoutall', CustomLogoutAllView.as_view(), name='knox_logoutall'),
 
     # ViewSet larni router orqali ulaymiz
     path('', include(router.urls)),
@@ -52,8 +48,8 @@ urlpatterns = [
     path('users', UserListAPIView.as_view(), name='user_list'),
     path('categories', CategoryListAPIView.as_view(), name='category_list'),
 
-    # Courses_related
-    path('course_sections', CourseStepListAPIView.as_view(), name='course_steps'),
+    # # Courses_related
+    # path('courses/sections', CourseStepListAPIView.as_view(), name='course_steps'),
 
     # Enrollment va Payment
     path('enrollments', EnrollmentCreateListAPIView.as_view(), name='enrollment_list_create'),
@@ -65,11 +61,10 @@ urlpatterns = [
     path('tags', TagListAPIView.as_view(), name='tags'),
     path('setting', SettingsListAPIView.as_view(), name='settings'),
     # Comments
-    path('comments', CommentListAPIView.as_view(), name='comment-list'),
-    path('comments/create', CommentCreateAPIView.as_view(), name='comment-create'),
+    path('comments', CommentListCreateAPIView.as_view(), name='comment-list'),
     path('comments/<uuid:pk>', CommentRetrieveUpdateDestroyAPIView.as_view(), name='comment-detail'),
 
     # Auth (Send / Verify code)
     path('auth/register', RegisterAPIView.as_view(), name='send_code'),
-    path('auth/Verify_code', VerifyCodeAPIView.as_view(), name='verify_code'),
+    path('auth/verify_code', VerifyCodeAPIView.as_view(), name='verify_code'),
 ]

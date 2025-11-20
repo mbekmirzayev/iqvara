@@ -1,13 +1,14 @@
 from django.core.exceptions import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema
-from knox.views import LogoutAllView, LogoutView
+from knox.views import LogoutView
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.generics import (
     CreateAPIView,
     DestroyAPIView,
     ListAPIView,
-    RetrieveUpdateDestroyAPIView,
+    RetrieveUpdateDestroyAPIView, ListCreateAPIView,
 )
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -52,11 +53,9 @@ from users.serializers import (
     SettingModelSerializer,
     TagModelSerializer,
     UserModelSerializer,
-    VerifyCodeSerializer,
+    VerifyCodeSerializer, ReviewModelSerializer,
 )
 from users.utils import check_verification_code, create_user_token, send_verification_code
-
-OTP_STORAGE = {}
 
 
 @extend_schema(tags=['users'])
@@ -92,7 +91,6 @@ class CategoryListAPIView(ListAPIView):
     serializer_class = CategoryModelSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('name',)
-    permission_classes = [AllowAny]
 
 
 @extend_schema(tags=["Category"])
@@ -103,32 +101,39 @@ class CategoryViewSet(ModelViewSet):
     http_method_names = ['post', 'put', 'patch', 'delete']
 
 
-@extend_schema(tags=["Course "])
+@extend_schema(tags=["Course"])
 class CourseModelViewSet(ModelViewSet):
     queryset = Course.objects.select_related('category')
     serializer_class = CourseModelSerializer
 
     def get_permissions(self):
-        if self.action == 'list':
-            permission_classes = [AllowAny]
-        elif self.action == 'retrieve':
-            permission_classes = [AllowAny]
-        elif self.action == 'create':
-            permission_classes = [IsInstructorOrAdmin]
+        if self.action == 'create':
+            self.permission_classes = [IsInstructorOrAdmin]
         elif self.action == 'update':
-            permission_classes = [IsInstructorOrAdmin]
+            self.permission_classes = [IsInstructorOrAdmin]
         elif self.action == 'destroy':
-            permission_classes = [IsAdminUser]
-        else:
-            permission_classes = [IsAuthenticated]
-        return [permission() for permission in permission_classes]
+            self.permission_classes = [IsAdminUser]
+        return [permission() for permission in self.permission_classes]
+
+    @action(methods=['get'], detail=False, url_path='sections', serializer_class=CourseSectionModelSerializer,
+            queryset=Section.objects.all())
+    def course_sections(self, request):
+        qs = self.get_queryset()
+        queryset = self.filter_queryset(qs)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 @extend_schema(tags=["Lesson"])
 class LessonViewSet(ModelViewSet):
     queryset = Lesson.objects.select_related("section__course__category").order_by('section__order_num')
     serializer_class = LessonModelSerializer
-    http_method_names = ['get', 'post', 'put', 'delete']
 
     def get_permissions(self):
         if self.action == 'list':
@@ -154,7 +159,7 @@ class CourseStepListAPIView(ListAPIView):
 @extend_schema(tags=["Review"])
 class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.all()
-    http_method_names = ['get', 'post', 'put', 'delete']
+    serializer_class = ReviewModelSerializer
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
@@ -193,23 +198,18 @@ class PaymentCreateListAPIView(ListAPIView, CreateAPIView):
 class FaqListAPIView(ListAPIView):
     queryset = FAQ.objects.all()
     serializer_class = FaqModelSerializer
-    permission_classes = [AllowAny]
-
-    QuerySet = FAQ.objects.all()
 
 
 @extend_schema(tags=["Settings & FAQ"])
 class SettingsListAPIView(ListAPIView):
     queryset = Setting.objects.all()
     serializer_class = SettingModelSerializer
-    permission_classes = [AllowAny]
 
 
 @extend_schema(tags=["Tag"])
 class TagListAPIView(ListAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagModelSerializer
-    permission_classes = [AllowAny]
 
 
 @extend_schema(tags=["Blogs"])
@@ -219,27 +219,25 @@ class BlogModelViewSet(ModelViewSet):
 
     def get_permissions(self):
         if self.action in ['create', 'retrieve', 'update', 'destroy']:
-            return [IsAuthenticated(), IsInstructorOrAdmin()]
-        return [AllowAny(), ]
+            self.permission_classes = [IsAuthenticated, IsInstructorOrAdmin]
+        return [permission() for permission in self.permission_classes]
 
 
 @extend_schema(tags=["Comments"])
-class CommentListAPIView(ListAPIView):
-    queryset = Comment.objects.select_related('user', 'blog').all()
+class CommentListCreateAPIView(ListCreateAPIView):
+    queryset = Comment.objects.select_related('user', 'blog')
     serializer_class = CommentNestedSerializer
     permission_classes = [IsAuthenticated]
 
-
-@extend_schema(tags=["Comments"])
-class CommentCreateAPIView(CreateAPIView):
-    queryset = Comment.objects.all()
-    serializer_class = CommentCreateSerializer
-    permission_classes = [IsAuthenticated]
+    def get_serializer_class(self):
+        if self.request.method == 'post':
+            return CommentCreateSerializer
+        return super().get_serializer_class()
 
 
 @extend_schema(tags=["Comments"])
 class CommentRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    queryset = Comment.objects.select_related('user', 'blog').all()
+    queryset = Comment.objects.select_related('user', 'blog')
     serializer_class = CommentNestedSerializer
     permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
 
@@ -326,10 +324,6 @@ class CustomLogoutView(LogoutView):
     pass
 
 
-class CustomLogoutAllView(LogoutAllView):
-    pass
-
-
 @extend_schema(tags=["Get me"])
 class UserProfileViewSet(ModelViewSet):
     serializer_class = UserModelSerializer
@@ -337,9 +331,6 @@ class UserProfileViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ['email']
-
-    def get_queryset(self):
-        return User.objects.filter(id=self.request.user.id)
 
     def get_object(self):
         return self.request.user

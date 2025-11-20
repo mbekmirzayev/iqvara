@@ -55,8 +55,14 @@ class PaymentModelAdmin(ModelAdmin):
 
 
 @admin.register(Promocode)
-class PromocodeModelAdmin(ModelAdmin):
+class PromoCodeModelAdmin(ModelAdmin):
     list_display = ('title', 'amount', 'created_at', 'expiry_date')
+
+
+class SectionStackedInline(admin.StackedInline):
+    model = Section
+    extra = 0
+    min_num = 0
 
 
 # course.py
@@ -65,6 +71,7 @@ class CourseAdmin(ModelAdmin):
     list_display = ('title', 'short_description', 'lesson_count', 'student_count', 'get_instructors')
     search_fields = ('title',)
     list_filter = ('title',)
+    inlines = [SectionStackedInline]
 
     @admin.display(description="Instructors")
     def get_instructors(self, obj):

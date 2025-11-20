@@ -66,3 +66,12 @@ Response body
 ```````````````````````````
 Ozim qilolmagan xatolarim : Review api ishlamayapti (500 error ) togirlay olmadim , course_sections uchun api kerakmi yoqmi bilmadim
 settingsdagi malumotlardi id sini oddiy int boldi sababi 1 ta data kiritilinadi holos
+
+
+Yangi Tasklar
+1. pochtaga tasdiqlash kodini yuborish
+2. argon2
+3. list apilarga pagination qoshish (page, size)
+4. devicelar apisini chiqarish, auth_tokenni custom qilish kerak, (updated_at, type[web,mobile], agent, device_id)
+5. adminkadan lokatsiya kiritish
+6.
