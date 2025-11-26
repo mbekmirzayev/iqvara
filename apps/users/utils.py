@@ -3,21 +3,20 @@ import random
 from datetime import timedelta
 
 from django.core.cache import cache
+from django.core.mail import send_mail
 from django.utils import timezone
 from knox.models import AuthToken
 from rest_framework.exceptions import ValidationError
 
 
-def create_user_token(user, max_tokens=3):
+def create_user_token(user, device=None, max_tokens=3):
     tokens = AuthToken.objects.filter(user=user)
-
     if tokens.count() >= max_tokens:
         tokens.order_by('created').first().delete()
 
-    # Yangi token yaratish (expiry optional, masalan 10 kun)
     token_instance, token = AuthToken.objects.create(
         user=user,
-
+        device=device,
         expiry=timedelta(days=10)
     )
     return token
@@ -32,7 +31,6 @@ def get_limit_key(email):
 
 
 def send_verification_code(email, expired_time=300):
-
     limit_key = get_limit_key(email)
     last_sent = cache.get(limit_key)
 
@@ -42,13 +40,28 @@ def send_verification_code(email, expired_time=300):
         if remaining > 0:
             raise ValidationError({"message": f"Please wait {remaining} seconds before requesting a new code"})
 
+    # 6 xonali kod
     code = random.randint(100000, 999999)
+
+    # Cache-ga saqlash
     code_key = get_cache_key(email)
     cache.set(code_key, code, timeout=expired_time)
 
     cache.set(limit_key, timezone.now(), timeout=expired_time)
 
-    print(f"Verification code for {email}: {code}")
+    # Gmailga yuborish
+    subject = "Your Verification Code"
+    message = f"Your verification code is: {code}"
+    from_email = None  # DEFAULT_FROM_EMAIL ishlaydi
+
+    send_mail(
+        subject=subject,
+        message=message,
+        from_email=from_email,
+        recipient_list=[email],
+        fail_silently=False
+    )
+
     return code
 
 

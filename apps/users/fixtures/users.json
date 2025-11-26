@@ -7,7 +7,7 @@
       "role": "admin",
       "phone": "+998901112233",
       "image": "images/demo1.jpg",
-      "password": "pbkdf2_sha256$600000$demo$hashedpassword1",
+      "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$ZVl5QW1oQ2xyeGFuT0lTdg$K0tFsqTHOK85pHkpmzH2kr7S2CzgS0sSi91tAM4P7k8\n",
       "is_superuser": true,
       "is_staff": true,
       "is_active": true
@@ -22,7 +22,7 @@
       "role": "manager",
       "phone": "+998907778899",
       "image": "images/demo2.jpg",
-      "password": "pbkdf2_sha256$600000$demo$hashedpassword2",
+      "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$TmxQcnVYQU1xZmhHbE5oZA$RDpBgCUzt6xLtJkLxZxFf1D5l8mb7cuit8PJeBCTzac\n",
       "is_superuser": false,
       "is_staff": true,
       "is_active": true
@@ -36,7 +36,7 @@
       "role": "instructor",
       "phone": "+998905551122",
       "image": "images/demo3.jpg",
-      "password": "pbkdf2_sha256$600000$demo$hashedpassword3",
+      "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$V0l4eU9BdHh6Z1RxT0tGbg$bmWISCRik8t7APtTgLL3Z5Br8n9G9vr6OYqg9EoXMfE\n",
       "is_superuser": false,
       "is_staff": false,
       "is_active": true

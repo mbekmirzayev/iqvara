@@ -3,7 +3,7 @@ from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 class IsAdminUser(BasePermission):
     """
-    Faqat admin foydalanuvchilarga ruxsat beradi.
+    Faqat users foydalanuvchilarga ruxsat beradi.
     """
 
     def has_permission(self, request, view):
@@ -12,7 +12,7 @@ class IsAdminUser(BasePermission):
 
 class IsInstructorOrAdmin(BasePermission):
     """
-    Faqat o‘qituvchi (instructor) yoki admin foydalanuvchilarga ruxsat beradi.
+    Faqat o‘qituvchi (instructor) yoki users foydalanuvchilarga ruxsat beradi.
     """
 
     def has_permission(self, request, view):
@@ -22,7 +22,7 @@ class IsInstructorOrAdmin(BasePermission):
 
 class IsStudentOrAdmin(BasePermission):
     """
-    Faqat student yoki admin foydalanuvchilarga ruxsat beradi.
+    Faqat student yoki users foydalanuvchilarga ruxsat beradi.
     """
 
     def has_permission(self, request, view):
@@ -53,7 +53,7 @@ class IsStudent(BasePermission):
 
 class IsOwnerOrAdmin(BasePermission):
     """
-    Obyekt egasiga (masalan, o‘zi yaratgan comment, payment) yoki admin userga ruxsat beradi.
+    Obyekt egasiga (masalan, o‘zi yaratgan comment, payment) yoki users userga ruxsat beradi.
     """
 
     def has_object_permission(self, request, view, obj):

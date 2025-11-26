@@ -16,6 +16,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    'django_admin_geomap',
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,7 +60,7 @@ WSGI_APPLICATION = 'root.wsgi.application'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates', 'path/to/installed/django_admin_geomap/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,6 +70,7 @@ TEMPLATES = [
             ],
         },
     },
+
 ]
 
 DATABASES = {
@@ -96,6 +98,14 @@ INTERNAL_IPS = [
     "localhost",
     # ...
 ]
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+    "django.contrib.auth.hashers.ScryptPasswordHasher",
+]
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -117,28 +127,34 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR / 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "apps/users/static"),
+]
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  # example@gmail.com
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+
+EMAIL_HOST_USER = "iqvara.noreply@gmail.com"
+EMAIL_HOST_PASSWORD = "orkn jklo hjyi jkwk"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
+    'DEFAULT_ROUTER_TRAILING_SLASH': False,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication', 'knox.auth.TokenAuthentication',
+    'DEFAULT_AUTHENTICATION_CLASSES': ( "rest_framework.authentication.TokenAuthentication",
+            #'rest_framework_simplejwt.authentication.JWTAuthentication', 'knox.auth.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
-    )
+    ),
+    'TOKEN_A_PREFIX': 'Token',
 }
 
 SPECTACULAR_SETTINGS = {
@@ -271,10 +287,11 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Library",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "books/img/logo.png",
+    "site_logo": None,
 
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
-    "login_logo": None,
+    "login_logo": "users/img/logo.png",
+
 
     # Logo to use for login form in dark themes (defaults to login_logo)
     "login_logo_dark": None,
@@ -306,12 +323,12 @@ JAZZMIN_SETTINGS = {
     "topmenu_links": [
 
         # Url that gets reversed (Permissions can be added)
-        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Home", "url": "users:index", "permissions": ["auth.view_user"]},
 
         # external url that opens in a new window (Permissions can be added)
         {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
 
-        # model admin to link to (Permissions checked against model)
+        # model users to link to (Permissions checked against model)
         {"model": "auth.User"},
 
         # App with dropdown menu to all its models pages (Permissions checked against models)
@@ -378,8 +395,8 @@ JAZZMIN_SETTINGS = {
     # UI Tweaks #
     #############
     # Relative paths to custom CSS/JS scripts (must be present in static files)
-    "custom_css": None,
     "custom_js": None,
+    "custom_css": "users/css/custom.css",
     # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
     "use_google_fonts_cdn": True,
     # Whether to show the UI customizer on the sidebar
@@ -397,7 +414,7 @@ JAZZMIN_SETTINGS = {
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
-    # Add a language dropdown into the admin
+    # Add a language dropdown into the users
     "language_chooser": True,
 }
 

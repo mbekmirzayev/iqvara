@@ -57,7 +57,7 @@ def get_app_list(self, request, app_label=None):
         'FAQ': 'label4',
         'Tag': 'label4',
         'Payment': 'label5',
-        'Promo': 'label5',
+        'Promocode': 'label5',
     }
     for _model in all_models:
         if _model['object_name'] in model_order.keys():

@@ -3,6 +3,12 @@ mohirdev.uz
 localhost:3000 react
 localhost:8000 drf
 
+Parol: password123 [1]
+
+Parol: demo12345 [2]
+
+Parol: admin2024 [3]
+
 | №      | Model nomi      | Maqsadi                                                  | API kerakmi?                                                | Kim ishlatadi                                   | Tavsiya etilgan permission                                                |
 | ------ | --------------- | -------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------- |
 | 1️⃣    | **User**        | Foydalanuvchilarni saqlaydi (student, instructor, admin) | ✅ API kerak (ro‘yxatdan o‘tish, profilni ko‘rish/yangilash) | Barcha foydalanuvchilar                         | `IsAuthenticated` (get/put), `AllowAny` (register)                        |
@@ -53,25 +59,57 @@ QuerySet ✅ +
 
 
 
+
+
+
+
 Response body
 
 {
-  "token": "18ef1b509729a947d56d0011bb32e160cfb502f661b8a805a1464103f43a9740",
-  "id": "8a4ff623-5306-455f-bbff-e8d351aef681",
-  "email": "admin@gmail.com",
-  "first_name": "",
-  "last_name": ""
+  "token": "343cd302f96821b19dc8d1a78025da488f5c80c7",
+  "user": {
+    "id": "067c35a1-a139-463d-9bc2-865a5e16412b",
+    "email": "admin3@gmail.com",
+    "first_name": "",
+    "last_name": ""
+  },
+  "device": {
+    "id": "93b2706c-968c-4bb5-acee-9b9d8c0ab4ed",
+    "type": "web",
+    "agent": "Mozilla/5.0 (X11; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0"
+  }
 }
 
+
+
+Response body
+
+{
+  "token": "620cfcf1084bf0aa340bd991a80a5b17a28f9c70",
+  "user": {
+    "id": "c4f73b8e-c15a-4b36-bc21-52d2b1b8a3cc",
+    "email": "bekmirzayevoff@gmail.com",
+    "first_name": "",
+    "last_name": ""
+  },
+  "device": {
+    "id": "5f5f4e8e-0c7d-46d7-80c7-44bb82aa2bf9",
+    "type": "web",
+    "agent": "Mozilla/5.0 (X11; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0"
+  }
+}
 ```````````````````````````
-Ozim qilolmagan xatolarim : Review api ishlamayapti (500 error ) togirlay olmadim , course_sections uchun api kerakmi yoqmi bilmadim
-settingsdagi malumotlardi id sini oddiy int boldi sababi 1 ta data kiritilinadi holos
+
 
 
 Yangi Tasklar
-1. pochtaga tasdiqlash kodini yuborish
-2. argon2
-3. list apilarga pagination qoshish (page, size)
-4. devicelar apisini chiqarish, auth_tokenni custom qilish kerak, (updated_at, type[web,mobile], agent, device_id)
+1. pochtaga tasdiqlash kodini yuborish ✅
+2. argon2 ✅
+3. list apilarga pagination qoshish (page, size) ✅
+4. devicelar apisini chiqarish, auth_tokenni custom qilish kerak, (updated_at, type[web,mobile], agent, device_id) ✅
 5. adminkadan lokatsiya kiritish
 6.
+
+
+
+

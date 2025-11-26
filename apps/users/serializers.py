@@ -10,7 +10,7 @@ from rest_framework.fields import (
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer, Serializer
 
-from users.models import FAQ, Category, Course, Lesson, Payment, Review, Setting, Tag, User
+from users.models import FAQ, Category, Course, Device, Lesson, Payment, Review, Setting, Tag, User
 from users.models.blogs import Blog, Comment, Step
 from users.models.courses import Enrollment, Section
 
@@ -121,6 +121,12 @@ class SettingModelSerializer(ModelSerializer):
         fields = "__all__"
 
 
+class DeviceSerializer(ModelSerializer):
+    class Meta:
+        model = Device
+        fields = ['id', 'device_id', 'type', 'agent', 'updated_at']
+
+
 # tags.py
 class TagModelSerializer(ModelSerializer):
     class Meta:
@@ -182,7 +188,7 @@ class EnrollmentModelSerializer(ModelSerializer):
 
 
 class RegisterSerializer(Serializer):
-    email = EmailField(default="BotirBotirov@gmail.com")
+    email = EmailField(default="bekmirzayevoff@gmail.com")
     first_name = CharField(max_length=50, default="Botir")
     last_name = CharField(max_length=50, default="Botirov")
     password = CharField(write_only=True, default="1")
@@ -194,15 +200,12 @@ class RegisterSerializer(Serializer):
 
 
 class VerifyCodeSerializer(Serializer):
-    email = EmailField(default="BotirBotirov@gmail.com")
+    email = EmailField(default="bekmirzayevoff@gmail.com")
     code = IntegerField()
-    first_name = CharField(max_length=50, write_only=True, default="Botir")
-    last_name = CharField(max_length=50, write_only=True, default="Botirov")
-    password = CharField(write_only=True, default="1")
 
 
 class LoginSerializer(Serializer):
-    email = EmailField(default="BotirBotirov@gmail.com")
+    email = EmailField(default="bekmirzayevoff@gmail.com")
     password = CharField(write_only=True, default="1")
 
     def validate(self, attrs):
@@ -217,3 +220,7 @@ class LoginSerializer(Serializer):
 
         attrs['user'] = user
         return attrs
+
+
+class LogoutSerializer(Serializer):
+    device_id = CharField()

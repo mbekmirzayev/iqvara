@@ -1,5 +1,5 @@
 from django.urls import include, path
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 
 from users.views import (
     BlogModelViewSet,
@@ -19,13 +19,12 @@ from users.views import (
     ReviewViewSet,
     SettingsListAPIView,
     TagListAPIView,
-    UserListAPIView,
     UserModelViewSet,
     UserProfileViewSet,
     VerifyCodeAPIView,
 )
 
-router = DefaultRouter()
+router = SimpleRouter(trailing_slash=False)
 
 router.register(r'users', UserModelViewSet, basename='users')
 router.register(r'categories', CategoryViewSet, basename='categories')
@@ -35,8 +34,6 @@ router.register(r'reviews', ReviewViewSet, basename='reviews')
 router.register(r'blogs', BlogModelViewSet, basename='blogs')
 router.register(r'userprofile', UserProfileViewSet, basename='get_me')
 
-# urls.py
-
 urlpatterns = [
     path('login', CustomLoginAPIView.as_view(), name='knox_login'),
     path('logout', CustomLogoutView.as_view(), name='knox_logout'),
@@ -45,7 +42,6 @@ urlpatterns = [
     path('', include(router.urls)),
 
     # ListAPIView yoki CreateAPIView lar
-    path('users', UserListAPIView.as_view(), name='user_list'),
     path('categories', CategoryListAPIView.as_view(), name='category_list'),
 
     # # Courses_related

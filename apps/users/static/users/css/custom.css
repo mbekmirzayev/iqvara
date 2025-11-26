@@ -1,0 +1,12 @@
+/* Login page logo size */
+picture img {
+    width: 200px !important;    /* O'lchamni shu yerda boshqarasan */
+    height: auto !important;
+    object-fit: contain !important;
+}
+
+/* Login page logo container */
+#site-logo {
+    display: flex !important;
+    justify-content: center !important;
+}

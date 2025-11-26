@@ -25,7 +25,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser, UUIDBaseModel):
     class Status(TextChoices):
-        ADMIN = 'admin', _('Admin')
+        ADMIN = 'users', _('Admin')
         MANAGER = 'manager', _('Manager')
         INSTRUCTOR = 'instructor', _('Instructor')
         STUDENT = 'student', _('Student')
@@ -44,7 +44,6 @@ class User(AbstractUser, UUIDBaseModel):
     def __str__(self):
         return f"{self.email} ({self.role})"
 
-    # Rollar uchun helper funksiyalar
     @property
     def is_admin(self):
         return self.role == self.Status.ADMIN or self.is_superuser

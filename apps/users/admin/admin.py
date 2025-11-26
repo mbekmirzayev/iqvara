@@ -10,7 +10,7 @@ from users.models.setting import Device
 # users.py
 @admin.register(User)
 class UserAdmin(ModelAdmin):
-    list_display = ('email', 'role', 'is_active', 'is_staff')
+    list_display = ('email', 'role', 'first_name', 'is_active', 'is_staff')
     list_filter = ('role', 'is_staff', 'is_superuser', 'is_active')
 
     fieldsets = (
@@ -59,26 +59,36 @@ class PromoCodeModelAdmin(ModelAdmin):
     list_display = ('title', 'amount', 'created_at', 'expiry_date')
 
 
+class LessonStackedInline(admin.StackedInline):
+    model = Lesson
+    extra = 1
+
+
 class SectionStackedInline(admin.StackedInline):
     model = Section
-    extra = 0
-    min_num = 0
+    inlines = [LessonStackedInline]
+    extra = 1
 
 
 # course.py
 @admin.register(Course)
 class CourseAdmin(ModelAdmin):
-    list_display = ('title', 'short_description', 'lesson_count', 'student_count', 'get_instructors')
+    list_display = ('title', 'short_description', 'lesson_count', 'get_instructors', 'get_students')
     search_fields = ('title',)
     list_filter = ('title',)
     inlines = [SectionStackedInline]
 
-    @admin.display(description="Instructors")
-    def get_instructors(self, obj):
-        return ", ".join([i.full_name for i in obj.instructor.all()])
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.prefetch_related('instructor', 'students')
 
-    def student_count(self, obj):
-        return obj.students.count()
+    @admin.display(description='Instructors')
+    def get_instructors(self, obj):
+        return ", ".join([i.email for i in obj.instructor.all()])
+
+    @admin.display(description='Students')
+    def get_students(self, obj):
+        return ", ".join([s.email for s in obj.students.all()])
 
 
 @admin.register(Category)
