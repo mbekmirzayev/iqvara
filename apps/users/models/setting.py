@@ -3,14 +3,13 @@ from django.db.models import (
     CharField,
     EmailField,
     FloatField,
-    ForeignKey,
     ManyToManyField,
     Model,
-    TextField,
+    TextField, OneToOneField,
 )
 from django.db.models.enums import TextChoices
 from django_ckeditor_5.fields import CKEditor5Field
-from rest_framework.authtoken.models import Token
+from knox.models import AbstractAuthToken
 
 from apps.shared.models import CreateBaseModel
 
@@ -40,18 +39,17 @@ class Device(CreateBaseModel):
     class DeviceType(TextChoices):
         WEB = 'web', 'WEB'
         MOBILE = 'mobile', 'MOBILE'
+
     device_id = CharField(max_length=255, unique=True)
     type = CharField(max_length=20, choices=DeviceType.choices)
     agent = TextField()
-    user = ManyToManyField('users.User', related_name='devices')
 
     def __str__(self):
         return f"Device({self.device_id} - {self.type})"
 
 
-class AuthToken(Token):
-    user = ForeignKey('users.User', CASCADE)
-    device = ForeignKey('users.Device', CASCADE, related_name='auth_token')
+class CustomAuthToken(AbstractAuthToken):
+    device = OneToOneField('users.Device', CASCADE, null=True, blank=True, related_name='auth_token')
 
     def __str__(self):
         return f"AuthToken ({self.user})"
