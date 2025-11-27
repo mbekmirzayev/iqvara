@@ -1,12 +1,12 @@
 import os
 import sys
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-# APPS_DIR = BASE_DIR / 'apps'
-# sys.path.insert(0, str(APPS_DIR))
+
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
 load_dotenv(BASE_DIR / '.env')
@@ -127,9 +127,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "apps/users/static"),
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -148,13 +146,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_ROUTER_TRAILING_SLASH': False,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_AUTHENTICATION_CLASSES': ( "rest_framework.authentication.TokenAuthentication",
-            #'rest_framework_simplejwt.authentication.JWTAuthentication', 'knox.auth.TokenAuthentication',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # "rest_framework.authentication.TokenAuthentication",
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'knox.auth.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
     ),
-    'TOKEN_A_PREFIX': 'Token',
+}
+
+KNOX_TOKEN_MODEL = 'users.CustomAuthToken'
+
+REST_KNOX = {
+    'SECURE_HASH_ALGORITHM': 'hashlib.sha512',
+    'AUTH_TOKEN_CHARACTER_LENGTH': 64,
+    'TOKEN_TTL': timedelta(hours=10),
+    'AUTH_HEADER_PREFIX': 'Token',
 }
 
 SPECTACULAR_SETTINGS = {
@@ -291,7 +299,6 @@ JAZZMIN_SETTINGS = {
 
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
     "login_logo": "users/img/logo.png",
-
 
     # Logo to use for login form in dark themes (defaults to login_logo)
     "login_logo_dark": None,
@@ -459,5 +466,3 @@ customColorPalette = [
 # import os
 #
 # GDAL_LIBRARY_PATH = "/usr/lib/libgdal.so.30.0.1"
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

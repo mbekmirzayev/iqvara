@@ -1,11 +1,12 @@
 import uuid
 
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema, extend_schema_view
+from knox.views import LoginView as KnoxLoginAPIView
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.generics import (
@@ -15,7 +16,7 @@ from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
 )
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -30,7 +31,6 @@ from shared.permissions import (
 )
 from users.models import (
     FAQ,
-    AuthToken,
     Blog,
     Category,
     Comment,
@@ -332,46 +332,51 @@ class VerifyCodeAPIView(APIView):
         }, status=200)
 
 
-# Login
-class CustomLoginAPIView(APIView):
+class CustomLoginAPIView(KnoxLoginAPIView):
     serializer_class = LoginSerializer
+    permission_classes = (AllowAny,)
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         email = serializer.validated_data['email']
         password = serializer.validated_data['password']
 
-        user = authenticate(email=email, password=password)
-        if not user:
+        self._user = authenticate(email=email, password=password)
+        if not self._user:
             return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
+        login(request, self._user)
         device_id = request.data.get("device_id") or str(uuid.uuid4())
         device_type = request.data.get("device_type", "web")
         agent = request.META.get("HTTP_USER_AGENT", "")
 
-        device_obj, _ = Device.objects.get_or_create(
+        self.device_obj, _ = Device.objects.get_or_create(
             device_id=device_id,
             defaults={"type": device_type, "agent": agent}
         )
 
-        token = AuthToken.objects.create(user=user, device=device_obj)
+        return super().post(request, *args, **kwargs)
 
-        return Response({
-            "token": token.key,
+    def get_post_response_data(self, request, token, instance):
+        instance.device = self.device_obj
+        instance.save(update_fields=["device"])
+        return {
+            'expiry': self.format_expiry_datetime(instance.expiry),
+            "token": token,
             "user": {
-                "id": user.id,
-                "email": user.email,
-                "first_name": user.first_name,
-                "last_name": user.last_name
+                "id": self._user.id,
+                "email": self._user.email,
+                "first_name": self._user.first_name,
+                "last_name": self._user.last_name
             },
             "device": {
-                "id": device_obj.id,
-                "type": device_obj.type,
-                "agent": device_obj.agent
+                "id": self.device_obj.id,
+                "type": self.device_obj.type,
+                "agent": self.device_obj.agent
             }
-        })
+        }
 
 
 class CustomLogoutView(APIView):

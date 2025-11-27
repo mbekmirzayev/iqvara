@@ -5,16 +5,17 @@ from datetime import timedelta
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.utils import timezone
-from knox.models import AuthToken
 from rest_framework.exceptions import ValidationError
+
+from users.models import CustomAuthToken
 
 
 def create_user_token(user, device=None, max_tokens=3):
-    tokens = AuthToken.objects.filter(user=user)
+    tokens = CustomAuthToken.objects.filter(user=user)
     if tokens.count() >= max_tokens:
         tokens.order_by('created').first().delete()
 
-    token_instance, token = AuthToken.objects.create(
+    token_instance, token = CustomAuthToken.objects.create(
         user=user,
         device=device,
         expiry=timedelta(days=10)
@@ -42,7 +43,7 @@ def send_verification_code(email, expired_time=300):
 
     # 6 xonali kod
     code = random.randint(100000, 999999)
-
+    print(code)
     # Cache-ga saqlash
     code_key = get_cache_key(email)
     cache.set(code_key, code, timeout=expired_time)
