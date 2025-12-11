@@ -3,7 +3,6 @@ from django.db.models import (
     CharField,
     EmailField,
     FloatField,
-    ManyToManyField,
     Model,
     TextField, OneToOneField,
 )
@@ -40,7 +39,7 @@ class Device(CreateBaseModel):
         WEB = 'web', 'WEB'
         MOBILE = 'mobile', 'MOBILE'
 
-    device_id = CharField(max_length=255, unique=True)
+    device_id = CharField(max_length=255)
     type = CharField(max_length=20, choices=DeviceType.choices)
     agent = TextField()
 
