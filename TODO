@@ -64,41 +64,23 @@ QuerySet ✅ +
 
 Response body
 
-{
-  "token": "343cd302f96821b19dc8d1a78025da488f5c80c7",
-  "user": {
-    "id": "067c35a1-a139-463d-9bc2-865a5e16412b",
-    "email": "admin3@gmail.com",
-    "first_name": "",
-    "last_name": ""
-  },
-  "device": {
-    "id": "93b2706c-968c-4bb5-acee-9b9d8c0ab4ed",
-    "type": "web",
-    "agent": "Mozilla/5.0 (X11; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0"
-  }
-}
-
-
-
+200
 Response body
 
 {
-  "token": "620cfcf1084bf0aa340bd991a80a5b17a28f9c70",
+  "expiry": "2025-12-11T02:54:45.827853+05:00",
+  "token": "555ff7e0c4c9abb1ff73572c7303cdec28af6b09f30febb081a240db5530465f",
   "user": {
-    "id": "c4f73b8e-c15a-4b36-bc21-52d2b1b8a3cc",
+    "id": "d84629c4-43e7-4580-a641-a282b4082867",
     "email": "bekmirzayevoff@gmail.com",
     "first_name": "",
     "last_name": ""
   },
   "device": {
-    "id": "5f5f4e8e-0c7d-46d7-80c7-44bb82aa2bf9",
+    "id": "b77e4966-913d-4900-ad13-e5fa18d25169",
     "type": "web",
     "agent": "Mozilla/5.0 (X11; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0"
   }
-}
-```````````````````````````
-
 
 
 Yangi Tasklar
