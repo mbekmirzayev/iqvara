@@ -1,0 +1,186 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-24 16:34+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: apps/users/models/blogs.py:19
+msgid "Blog"
+msgstr "Blog"
+
+#: apps/users/models/blogs.py:20
+msgid "Blogs"
+msgstr "Bloglar"
+
+#: apps/users/models/blogs.py:37
+msgid "Comment"
+msgstr "Izoh"
+
+#: apps/users/models/blogs.py:38
+msgid "Comments"
+msgstr "Izohlar"
+
+#: apps/users/models/courses.py:15
+msgid "Category"
+msgstr "Kategoriya"
+
+#: apps/users/models/courses.py:16
+msgid "Categories"
+msgstr "Kategoriyalar"
+
+#: apps/users/models/courses.py:30
+msgid "Course title"
+msgstr "Kurs nomi"
+
+#: apps/users/models/courses.py:45
+msgid "Course"
+msgstr "Kurs"
+
+#: apps/users/models/courses.py:46
+msgid "Courses"
+msgstr "Kurslar"
+
+#: apps/users/models/courses.py:55
+msgid "Course section title"
+msgstr "Kurs qadamining nomi"
+
+#: apps/users/models/courses.py:65
+msgid "Private"
+msgstr "Shaxsiy"
+
+#: apps/users/models/courses.py:66
+msgid "Public"
+msgstr "Ommaviy"
+
+#: apps/users/models/courses.py:82
+msgid "In Progress"
+msgstr "Jarayonda"
+
+#: apps/users/models/courses.py:83
+msgid "Completed"
+msgstr "Yakunlangan"
+
+#: apps/users/models/payment.py:11
+msgid "One time payment"
+msgstr "Bir paytda to'lash"
+
+#: apps/users/models/payment.py:12
+msgid "Installment"
+msgstr "Bo'lib to'lash"
+
+#: apps/users/models/payment.py:15
+msgid "Uzcard"
+msgstr "Uzcard"
+
+#: apps/users/models/payment.py:16
+msgid "Humo"
+msgstr "Humo"
+
+#: apps/users/models/payment.py:18
+msgid "Course name"
+msgstr "kurs nomi "
+
+#: apps/users/models/payment.py:19
+msgid "Instructor name"
+msgstr "Ustozning ismi"
+
+#: apps/users/models/payment.py:20
+msgid "Course price"
+msgstr "Kurs narxi"
+
+#: apps/users/models/payment.py:21
+msgid "Discount"
+msgstr "Chegirma"
+
+#: apps/users/models/payment.py:22
+msgid "Promo code"
+msgstr "Promocode"
+
+#: apps/users/models/payment.py:23
+msgid "Payment type"
+msgstr "To'lov usuli"
+
+#: apps/users/models/payment.py:24
+msgid "Installment period"
+msgstr "Bo'lib to'lash davri"
+
+#: apps/users/models/payment.py:25
+msgid "Initial payment percent"
+msgstr "Dastlabki to'lov foizi"
+
+#: apps/users/models/payment.py:26
+msgid "Card type"
+msgstr "Karta turi "
+
+#: apps/users/models/payment.py:27
+msgid "Card number is invalid"
+msgstr "Karta raqami noto'g'ri"
+
+#: apps/users/models/payment.py:27
+msgid "Card number"
+msgstr "Karta raqam"
+
+#: apps/users/models/payment.py:28
+msgid "Expiry date (MM/YY)"
+msgstr "Amal qilish muddati"
+
+#: apps/users/models/payment.py:29
+msgid "Phone number is invalid"
+msgstr "Telefom raqam noto'g'ri"
+
+#: apps/users/models/payment.py:29
+msgid "Phone number"
+msgstr "Telefon raqam"
+
+#: apps/users/models/payment.py:30
+msgid "Total amount"
+msgstr "Umumiy qiymat"
+
+#: apps/users/models/payment.py:31
+msgid "Agreed terms"
+msgstr "Kelishilgan shartlar"
+
+#: apps/users/models/payment.py:36
+msgid "Installment period is required for installment payments."
+msgstr "Bo'lib-bo'lib to'lash uchun to'lov muddati talab qilinadi."
+
+#: apps/users/models/payment.py:38
+msgid "Initial payment percent is required."
+msgstr "Bo'lib-bo'lib to'lash uchun to'lov foizi talab qilinadi."
+
+#: apps/users/models/tags.py:11
+msgid "Tag"
+msgstr "Teg"
+
+#: apps/users/models/tags.py:12
+msgid "Tags"
+msgstr "Teglar"
+
+#: apps/users/models/users.py:26
+msgid "Admin"
+msgstr "Admin"
+
+#: apps/users/models/users.py:27
+msgid "Manager"
+msgstr "Menejer"
+
+#: apps/users/models/users.py:28
+msgid "Instructor"
+msgstr "Ustoz"
+
+#: apps/users/models/users.py:29
+msgid "Student"
+msgstr "O'quvchi"
